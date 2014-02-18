@@ -3,28 +3,29 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-	import flash.events.Event;
+	
+	import models.PosVO;
 	
 	import starling.core.Starling;
 	
+	[SWF(width="1024", height="768", frameRate="30", backgroundColor="0x554040")]
 	public class JiaYin extends Sprite
 	{
 		public function JiaYin()
 		{
 			super();
 			
-			
-			this.addEventListener(Event.ADDED_TO_STAGE, onStage);
-		}
-		
-		private var star:Starling;
-		protected function onStage(event:Event):void
-		{
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
-			star = new Starling(Main, stage);
-			star.start();
+			PosVO.init(stage.fullScreenWidth, stage.fullScreenHeight);
+			
+			var scale:Number = PosVO.scale;
+			this.scaleX = this.scaleY = scale;
+			this.x = PosVO.OffsetX;
+			this.y = PosVO.OffsetY;
 		}
+		
+		private var star:Starling;
 	}
 }
