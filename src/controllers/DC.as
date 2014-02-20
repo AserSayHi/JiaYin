@@ -1,8 +1,8 @@
 package controllers
 {
 	import com.pamakids.utils.Singleton;
-
 	import models.SOService;
+
 
 	/**
 	 * 数据中心，除了本地数据缓存之外也包括同服务器通信
@@ -12,8 +12,6 @@ package controllers
 	{
 
 		private var so:SOService;
-
-		public var taskes:Array;
 
 		public function DC()
 		{

@@ -4,6 +4,8 @@ package controllers
 	
 	import flash.utils.Dictionary;
 	
+	import models.PosVO;
+	
 	import starling.utils.AssetManager;
 
 	/**
@@ -23,7 +25,7 @@ package controllers
 		{
 			if(!_dic[name])
 			{
-				var am:AssetManager = new AssetManager();
+				var am:AssetManager = new AssetManager( PosVO.scale );
 				_dic[name] = am;
 			}
 			return am;

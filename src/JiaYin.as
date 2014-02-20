@@ -24,8 +24,17 @@ package
 			this.scaleX = this.scaleY = scale;
 			this.x = PosVO.OffsetX;
 			this.y = PosVO.OffsetY;
+			
+			
+			
+			initStarling();
 		}
 		
+		private function initStarling():void
+		{
+			star = new Starling(Main, stage);
+			star.start();
+		}
 		private var star:Starling;
 	}
 }
