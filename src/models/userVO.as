@@ -1,12 +1,9 @@
 package models
 {
-	public class userVO
+	public class UserVO
 	{
-		public function userVO()
+		public function UserVO()
 		{
 		}
-		
-		private var _pvo:ParentVO;
-		private var _cvo:ChildVO;
 	}
 }

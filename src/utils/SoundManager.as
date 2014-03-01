@@ -1,4 +1,4 @@
-package controllers
+package utils
 {
 	import com.pamakids.manager.LoadManager;
 	import com.pamakids.utils.Singleton;

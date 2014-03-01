@@ -1,18 +1,14 @@
 package models
 {
 	import utils.DPIUtil;
-
+	
 	public class PosVO
 	{
 		private static var arr:Array;
 
-		public function PosVO()
+		public static function init(sx:Number, sy:Number):void
 		{
-		}
-
-		public static function init(sx:Number=1024, sy:Number=768):void
-		{
-			arr=DPIUtil.getAndroidSize(sx, sy);
+			arr=DPIUtil.getAndroidSize(sx,sy);
 		}
 
 		public static function get scale():Number

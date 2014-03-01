@@ -52,23 +52,26 @@ package utils
 		/**
 		 * array[scale,offsetX,offsetY]
 		 * */
-		public static function getAndroidSize(sx:Number=1024, sy:Number=768):Array
+		public static function getAndroidSize(sx:Number, sy:Number):Array
 		{
-			var w:int=Math.max(sx, sy);
-			var h:int=Math.min(sx, sy);
-
+			const LogicWidth:uint = 1280;
+			const LogicHeight:uint = 960;
+			
+			var w:int  = Math.max( sx, sy );
+			var h:int = Math.min( sx, sy );
+			
 			var scale:Number=0;
 			var offsetX:Number=0
 			var offsetY:Number=0;
-			if (h / 768 > w / 1024)
+			if (h / LogicHeight > w / LogicWidth)
 			{
-				scale=w / 1024;
-				offsetY=(h - 768 * scale) / 2;
+				scale= h / LogicHeight;
+				offsetX=(w - LogicWidth * scale) / 2;
 			}
 			else
 			{
-				scale=h / 768;
-				offsetX=(w - 1024 * scale) / 2;
+				scale=w / LogicWidth;
+				offsetY=(h - LogicHeight * scale) / 2;
 			}
 			return [scale, offsetX, offsetY];
 		}

@@ -17,11 +17,9 @@ package models
 
 		public function init():void
 		{
-			userInfo=SharedObject.getLocal("");
 			so=SharedObject.getLocal("");
 		}
 		
-		public var userInfo:SharedObject;
 		private var so:SharedObject;
 
 		/**
@@ -37,7 +35,6 @@ package models
 		 */
 		public function clear():void
 		{
-			userInfo.clear();
 			so.clear();
 		}
 
