@@ -4,14 +4,13 @@ package views.components
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	import controllers.MC;
+	import models.PosVO;
 	
 	import utils.StatusManager;
 	
 	public class MainLoading extends Sprite
 	{
-//		[Embed(source="/assets/embed/login.jpg")]
-		[Embed(source="/assets/embed/1.png")]
+		[Embed(source="/assets/embed/login.png")]
 		private static const BG:Class;
 		[Embed(source="/assets/embed/loading.png")]
 		private static const LoadingPNG:Class;
@@ -54,8 +53,8 @@ package views.components
 			loading.x = - loading.width >> 1;
 			loading.y = - loading.height >> 1;
 			this.addChild( sprite );
-			sprite.x = MC.CENTER.x;
-			sprite.y = MC.CENTER.y;
+			sprite.x = PosVO.LOGIC_WIDTH >> 1;
+			sprite.y = PosVO.LOGIC_HEIGHT >> 1;
 		}
 		
 		private function onTimer():void

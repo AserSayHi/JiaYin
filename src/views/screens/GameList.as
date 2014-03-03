@@ -1,8 +1,6 @@
 package views.screens
 {
-	import starling.display.Sprite;
-	
-	public class GameList extends Sprite
+	public class GameList extends BasicScreen
 	{
 		public function GameList()
 		{

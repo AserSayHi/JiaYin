@@ -1,8 +1,6 @@
 package views.screens
 {
-	import starling.display.Sprite;
-	
-	public class LoginIn extends Sprite
+	public class LoginIn extends BasicScreen
 	{
 		public function LoginIn()
 		{

@@ -1,5 +1,7 @@
 package views.components
 {
+	import models.PosVO;
+	
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 
@@ -21,8 +23,8 @@ package views.components
 			main.addChild( local );
 			
 			global = new Sprite();
-			global.x -= main.x;
-			global.y -= main.y;
+			global.x = PosVO.LOGIC_WIDTH - PosVO.REAL_WIDTH >> 1;
+			global.y = PosVO.LOGIC_HEIGHT - PosVO.REAL_HEIGHT >> 1;
 			main.addChild( global );
 		}	
 		/**
@@ -49,10 +51,10 @@ package views.components
 		 */
 		public function addChild(child:DisplayObject, ifLocal:Boolean=false):void
 		{
-			if(!ifLocal)
-				global.addChild( child );
-			else
+			if(ifLocal)
 				local.addChild( child );
+			else
+				global.addChild( child );
 		}
 	}
 }

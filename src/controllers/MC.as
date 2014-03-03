@@ -1,56 +1,54 @@
 package controllers
 {
+	import com.greensock.TweenLite;
 	import com.pamakids.utils.Singleton;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.filesystem.File;
-	import flash.geom.Point;
 	
 	import models.PosVO;
+	import models.code.ScreenCode;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	import starling.utils.AssetManager;
 	
-	import views.ScreenContainer;
+	import utils.GameController;
+	import utils.ScreenController;
+	
 	import views.components.MainLoading;
 	import views.components.Stage2D;
 	import views.components.Stage3D;
 	
 	public class MC extends Singleton
 	{
-		public static const LOGIC_WIDTH:uint = 1280;
-		public static const LOGIC_HEIGHT:uint = 960;
-		public static const CENTER:Point = new Point( LOGIC_WIDTH/2, LOGIC_HEIGHT/2 );
-		
 		public static function get instance():MC
 		{
 			return Singleton.getInstance( MC );
 		}
 		
-		//原生flash显示对象容器
-		private var stage2d:Stage2D;
-		//starling显示对象容器
-		private var stage3d:Stage3D;
+		private var stage2d:Stage2D;		//原生flash显示对象容器
+		private var stage3d:Stage3D;		//starling显示对象容器
+		private var main2d:flash.display.Sprite;	//stage2d父级容器
+		private var main3d:starling.display.Sprite;	//stage3d父级容器
 		
-		private var main3d:starling.display.Sprite;
-		private var main2d:flash.display.Sprite
-		
-		private var mainLoading:MainLoading;
+		private var sController:ScreenController;	//场景控制器	
+		private var gController:GameController;		//游戏控制器
 		
 		public function initialize(main:starling.display.Sprite):void
 		{
+			//初始化页面控制器
+			sController = ScreenController.instance();
+			gController = GameController.instance();
+			
 			//starling显示层初始化
 			this.main3d = main;
 			main3d.scaleX = main3d.scaleY = PosVO.scale;
-			main3d.x = PosVO.OffsetX * PosVO.scale;
-			main3d.y = PosVO.OffsetY * PosVO.scale;
 			stage3d = new Stage3D(main3d);
 			
-			//原生显示层容器初始化
+			//原生显示层初始化
 			main2d = new flash.display.Sprite();
 			main2d.scaleX = main2d.scaleY = PosVO.scale;
 			main2d.x = PosVO.OffsetX;
@@ -63,6 +61,7 @@ package controllers
 		}
 		
 		private var assets:AssetManager;
+		private var mainLoading:MainLoading;
 		private function loadAssets():void
 		{
 			mainLoading = new MainLoading();
@@ -71,19 +70,21 @@ package controllers
 			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
 			assets.enqueue(File.applicationDirectory.resolvePath("assets/mainUI"));
 			assets.loadQueue( function(ratio:Number):void{
-				if(ratio == 1)
+				if(ratio == 1)		//加载完成
 				{
-					initScreenContainer();
-					delChild( mainLoading );
+					addToStage3D( Assets.getImage( assets, "1" ), true);
+					sController.openScreen(ScreenCode.MAP);
+					TweenLite.to( mainLoading, 1.5, {alpha: 0, onComplete:function():void{
+						delChild( mainLoading );
+					}});
 				}
-			} );
+			});
 		}
 		
-		private var screenContainer:ScreenContainer;
-		private function initScreenContainer():void
+		public function openGame(gameID:String):void
 		{
-			screenContainer = new ScreenContainer();
-			stage3d.addChild( screenContainer );
+			sController.delCrtScreen();
+			gController.openGame(gameID);
 		}
 		
 		/**
@@ -108,5 +109,6 @@ package controllers
 					child.parent.removeChild( child );
 			}
 		}
+		
 	}
 }

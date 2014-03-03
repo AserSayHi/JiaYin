@@ -50,12 +50,12 @@ package utils
 		}
 
 		/**
-		 * array[scale,offsetX,offsetY]
+		 * array[scale, offsetX, offsetY, realWidth, realHeight]
 		 * */
-		public static function getAndroidSize(sx:Number, sy:Number):Array
+		public static function getAndroidSize(sx:Number, sy:Number, logicW:uint, logicH:uint):Array
 		{
-			const LogicWidth:uint = 1280;
-			const LogicHeight:uint = 960;
+			const LogicWidth:uint = logicW;
+			const LogicHeight:uint = logicH;
 			
 			var w:int  = Math.max( sx, sy );
 			var h:int = Math.min( sx, sy );
@@ -63,17 +63,27 @@ package utils
 			var scale:Number=0;
 			var offsetX:Number=0
 			var offsetY:Number=0;
+			var realWidth:Number = 0;
+			var realHeight:Number = 0;
 			if (h / LogicHeight > w / LogicWidth)
 			{
 				scale= h / LogicHeight;
 				offsetX=(w - LogicWidth * scale) / 2;
+				realHeight = LogicHeight;
+				realWidth = Math.round( w / scale );
+				if(realWidth%2 == 1)
+					realWidth += 1;
 			}
 			else
 			{
 				scale=w / LogicWidth;
 				offsetY=(h - LogicHeight * scale) / 2;
+				realWidth = LogicWidth
+				realHeight = Math.round( h / scale );
+				if(realHeight%2 == 1)
+					realHeight += 1;
 			}
-			return [scale, offsetX, offsetY];
+			return [scale, offsetX, offsetY, realWidth, realHeight];
 		}
 
 	}

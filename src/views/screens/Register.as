@@ -1,12 +1,10 @@
 package views.screens
 {
-	import starling.display.Sprite;
 	
-	public class Register extends Sprite
+	public class Register extends BasicScreen
 	{
 		public function Register()
 		{
-			super();
 		}
 	}
 }

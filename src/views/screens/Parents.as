@@ -1,8 +1,7 @@
 package views.screens
 {
-	import starling.display.Sprite;
 	
-	public class Parents extends Sprite
+	public class Parents extends BasicScreen
 	{
 		public function Parents()
 		{

@@ -3,6 +3,8 @@ package views.components
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
+	import models.PosVO;
+	
 	/**
 	 * flash原生显示对象容器
 	 * @author kc2ong
@@ -24,8 +26,8 @@ package views.components
 			main.addChild( local );
 			
 			global = new Sprite();
-			global.x -= main.x;
-			global.y -= main.y;
+			global.x = PosVO.LOGIC_WIDTH - PosVO.REAL_WIDTH >> 1;
+			global.y = PosVO.LOGIC_HEIGHT - PosVO.REAL_HEIGHT >> 1;
 			main.addChild( global );
 		}
 		

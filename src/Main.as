@@ -4,8 +4,6 @@ package
 	
 	import starling.display.Sprite;
 	
-	import utils.StatusManager;
-	
 	public class Main extends Sprite
 	{
 		public function Main()
@@ -17,7 +15,6 @@ package
 		
 		private function initialize():void
 		{
-			StatusManager.getInstance().initialize();
 			MC.instance.initialize(this);
 		}
 	}

@@ -1,6 +1,6 @@
 package views.screens
 {
-	public class Boards
+	public class Boards extends BasicScreen
 	{
 		public function Boards()
 		{
