@@ -10,7 +10,7 @@ package views.components
 	
 	public class MainLoading extends Sprite
 	{
-		[Embed(source="/assets/embed/login.png")]
+		[Embed(source="/assets/embed/login.jpg")]
 		private static const BG:Class;
 		[Embed(source="/assets/embed/loading.png")]
 		private static const LoadingPNG:Class;

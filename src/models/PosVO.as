@@ -38,22 +38,13 @@ package models
 			var w:Number = Math.max( sx, sy );
 			var h:Number = Math.min( sx, sy );
 			var arr:Array = DPIUtil.getAndroidSize(w, h, logicW, logicH);
-			
 			Scale = arr[0];
 			offsetX = arr[1];
 			offsetY = arr[2];
-			
-			logic_W = logicW;
-			logic_H = logicH;
-			
 			real_W = arr[3];
 			real_H = arr[4];
-//			real_W = Math.min( logic_W, Math.round( w/Scale ) );
-//			if(real_W%2 == 1)
-//				real_W += 1;
-//			real_H = Math.min( logic_H, Math.round( h/Scale ) );
-//			if(real_H%2 == 1)
-//				real_H += 1;
+			logic_W = logicW;
+			logic_H = logicH;
 		}
 
 		public static function get scale():Number

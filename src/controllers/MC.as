@@ -72,13 +72,17 @@ package controllers
 			assets.loadQueue( function(ratio:Number):void{
 				if(ratio == 1)		//加载完成
 				{
-					addToStage3D( Assets.getImage( assets, "1" ), true);
-					sController.openScreen(ScreenCode.MAP);
+					openScreen( ScreenCode.MAP );
 					TweenLite.to( mainLoading, 1.5, {alpha: 0, onComplete:function():void{
 						delChild( mainLoading );
 					}});
 				}
 			});
+		}
+		
+		public function openScreen( screenID:String ):void
+		{
+			sController.openScreen( screenID );
 		}
 		
 		public function openGame(gameID:String):void

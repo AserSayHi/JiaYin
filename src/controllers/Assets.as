@@ -4,8 +4,6 @@ package controllers
 	
 	import flash.utils.Dictionary;
 	
-	import models.PosVO;
-	
 	import starling.display.Image;
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;

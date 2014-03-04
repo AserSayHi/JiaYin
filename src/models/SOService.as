@@ -17,7 +17,7 @@ package models
 
 		public function init():void
 		{
-			so=SharedObject.getLocal("");
+			so=SharedObject.getLocal("saveData");
 		}
 		
 		private var so:SharedObject;

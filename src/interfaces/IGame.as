@@ -18,5 +18,4 @@ package interfaces
 		
 		function get gameID():String;
 	}
-	
 }

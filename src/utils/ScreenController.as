@@ -7,6 +7,7 @@ package utils
 	
 	import models.code.ScreenCode;
 	
+	import starling.display.Image;
 	import starling.utils.AssetManager;
 	
 	import views.screens.BasicScreen;
@@ -28,6 +29,7 @@ package utils
 		
 		private var assets:AssetManager;
 		private var mc:MC;
+		private var bg:Image;
 		private function initialize():void
 		{
 			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
@@ -37,6 +39,11 @@ package utils
 		private var screen:BasicScreen;
 		public function openScreen(ID:String, args:*=null):void
 		{
+			if(!bg)
+			{
+				bg = Assets.getImage( assets, "mainBG" );
+				mc.addToStage3D( bg, true );
+			}
 			delCrtScreen();
 			switch(ID)
 			{

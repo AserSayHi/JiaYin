@@ -1,5 +1,6 @@
 package
 {
+	import controllers.DC;
 	import controllers.MC;
 	
 	import starling.display.Sprite;
@@ -15,6 +16,7 @@ package
 		
 		private function initialize():void
 		{
+			DC.instance.initialize();
 			MC.instance.initialize(this);
 		}
 	}

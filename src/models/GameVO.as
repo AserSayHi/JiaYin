@@ -8,5 +8,9 @@ package models
 		
 		public var id:String;
 		public var name:String;
+		/**
+		 * 
+		 */		
+		public var isOpen:Boolean = false;
 	}
 }

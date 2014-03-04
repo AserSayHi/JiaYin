@@ -23,9 +23,8 @@ package
 			trace("设备屏幕尺寸： width = " + stage.fullScreenWidth + ", height = " + stage.fullScreenHeight);
 			trace("虚拟视窗尺寸: width = "+PosVO.LOGIC_WIDTH+", height = "+PosVO.LOGIC_HEIGHT);
 			trace("实际显示尺寸: width = "+PosVO.REAL_WIDTH+", height = "+PosVO.REAL_HEIGHT);
-			trace("缩放比：" + PosVO.scale + "," + PosVO.OffsetX + "," + PosVO.OffsetY);
+			trace("缩放比： scale = " + PosVO.scale + ", offsetX = " + PosVO.OffsetX + ", offsetY = " + PosVO.OffsetY);
 			trace("==================================================");
-			
 			
 			var rect:Rectangle = new Rectangle(PosVO.OffsetX, PosVO.OffsetY, 
 				PosVO.LOGIC_WIDTH * PosVO.scale, 

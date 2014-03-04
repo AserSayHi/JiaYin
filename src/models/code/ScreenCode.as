@@ -9,13 +9,15 @@ package models.code
 		/** your board  */
 		public static const BOARD:String = "board";
 		/** 游戏列表 */
-		public static const GAME_LIST:String = "gameList";
+		public static const GAME_LIST:String = "games";
 		/** learn to more */
 		public static const MORE:String = "more";
 		/** 父母  */
 		public static const PARENTS:String = "parents";
 		/** 注册  */
 		public static const REGISTER:String = "register";
+		/** 主线  */
+		public static const MAIN:String = "main";
 		
 	}
 }

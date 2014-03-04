@@ -1,7 +1,8 @@
 package controllers
 {
 	import com.pamakids.utils.Singleton;
-	import models.SOService;
+	
+	import flash.net.SharedObject;
 
 
 	/**
@@ -10,17 +11,32 @@ package controllers
 	 */
 	public class DC extends Singleton
 	{
-
-		private var so:SOService;
-
-		public function DC()
-		{
-			so=SOService.instance;
-		}
-
 		public static function get instance():DC
 		{
 			return Singleton.getInstance(DC);
+		}
+		
+		private var so:SharedObject;
+		
+		public function initialize():void
+		{
+			so = SharedObject.getLocal("Local");
+		}
+		
+		public function getData(code:String):Object
+		{
+			return null;
+		}
+		
+		public function checkLocalData(code:String):Boolean
+		{
+			return (so.data[code] != null);
+		}
+		
+		public function save(code:String, obj:Object):void
+		{
+			so.data[code] = obj;
+			so.flush();
 		}
 	}
 }
