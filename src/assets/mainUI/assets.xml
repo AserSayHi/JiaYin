@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:22e0bfd8284b75bc1385e9c7cd00a0a9$ -->
+<!-- $TexturePacker:SmartUpdate:8b3118bafd8a7f5e99234622e6e372b7$ -->
 <TextureAtlas imagePath="assets.png">
     <SubTexture name="btn_back" x="688" y="62" width="108" height="28"/>
-    <SubTexture name="btn_board" x="504" y="62" width="182" height="28"/>
-    <SubTexture name="btn_games" x="504" y="32" width="182" height="28"/>
-    <SubTexture name="btn_login" x="688" y="32" width="108" height="28"/>
-    <SubTexture name="btn_main" x="504" y="2" width="182" height="28"/>
-    <SubTexture name="btn_map" x="320" y="62" width="182" height="28"/>
-    <SubTexture name="btn_more" x="320" y="32" width="182" height="28"/>
+    <SubTexture name="btn_board" x="688" y="2" width="182" height="28"/>
+    <SubTexture name="btn_games" x="504" y="62" width="182" height="28"/>
+    <SubTexture name="btn_login" x="798" y="32" width="108" height="28"/>
+    <SubTexture name="btn_main" x="504" y="32" width="182" height="28"/>
+    <SubTexture name="btn_map" x="504" y="2" width="182" height="28"/>
+    <SubTexture name="btn_more" x="320" y="62" width="182" height="28"/>
     <SubTexture name="btn_music_closed" x="162" y="2" width="156" height="84" frameX="-2" frameY="0" frameWidth="158" frameHeight="84"/>
     <SubTexture name="btn_music_opend" x="2" y="2" width="158" height="84"/>
-    <SubTexture name="btn_parents" x="320" y="2" width="182" height="28"/>
-    <SubTexture name="btn_register" x="688" y="2" width="108" height="28"/>
+    <SubTexture name="btn_parents" x="320" y="32" width="182" height="28"/>
+    <SubTexture name="btn_register" x="688" y="32" width="108" height="28"/>
+    <SubTexture name="btn_startGame" x="320" y="2" width="182" height="28"/>
 </TextureAtlas>

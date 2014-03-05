@@ -1,5 +1,9 @@
 package models.code
 {
+	/**
+	 * 场景编码表/场景ID
+	 * @author kc2ong
+	 */	
 	public class ScreenCode
 	{
 		/** 登陆 */

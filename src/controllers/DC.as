@@ -23,19 +23,33 @@ package controllers
 			so = SharedObject.getLocal("Local");
 		}
 		
+		/**
+		 * 获取本地的缓存数据
+		 * @param code	数据编码，由SoCode类静态常量定义
+		 */		
 		public function getData(code:String):Object
 		{
 			return null;
 		}
 		
+		/**
+		 * 检测本地中是否有相应缓存数据
+		 * @param code	数据编码，由SoCode类静态常量定义
+		 */		
 		public function checkLocalData(code:String):Boolean
 		{
 			return (so.data[code] != null);
 		}
 		
-		public function save(code:String, obj:Object):void
+		/**
+		 * 将数据存入本地
+		 * @param code	数据编码，由SoCode类静态常量定义
+		 * @param data	数据
+		 * 
+		 */		
+		public function save(code:String, data:Object):void
 		{
-			so.data[code] = obj;
+			so.data[code] = data;
 			so.flush();
 		}
 	}

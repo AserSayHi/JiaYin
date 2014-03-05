@@ -16,8 +16,12 @@ package utils
 			return _instance;
 		}
 		
+		private var initialized:Boolean = false;
 		public function initialize():void
 		{
+			if(initialized)
+				return;
+			initialized = true;
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		

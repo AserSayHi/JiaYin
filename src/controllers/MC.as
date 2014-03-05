@@ -1,11 +1,9 @@
 package controllers
 {
-	import com.greensock.TweenLite;
 	import com.pamakids.utils.Singleton;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.filesystem.File;
 	
 	import models.PosVO;
 	import models.code.ScreenCode;
@@ -13,12 +11,10 @@ package controllers
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
-	import starling.utils.AssetManager;
 	
 	import utils.GameController;
 	import utils.ScreenController;
 	
-	import views.components.MainLoading;
 	import views.components.Stage2D;
 	import views.components.Stage3D;
 	
@@ -56,39 +52,29 @@ package controllers
 			Starling.current.nativeStage.addChild( main2d );
 			stage2d = new Stage2D(main2d);
 			
-			//mainUI资源加载
-			loadAssets();
+			//打开map场景
+			openScreen( ScreenCode.MAP );
 		}
 		
-		private var assets:AssetManager;
-		private var mainLoading:MainLoading;
-		private function loadAssets():void
-		{
-			mainLoading = new MainLoading();
-			addToStage2D( mainLoading, true );
-			
-			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
-			assets.enqueue(File.applicationDirectory.resolvePath("assets/mainUI"));
-			assets.loadQueue( function(ratio:Number):void{
-				if(ratio == 1)		//加载完成
-				{
-					openScreen( ScreenCode.MAP );
-					TweenLite.to( mainLoading, 1.5, {alpha: 0, onComplete:function():void{
-						delChild( mainLoading );
-					}});
-				}
-			});
-		}
-		
+		/**
+		 * 根据场景ID打开指定场景，内部封装了资源的加载逻辑
+		 * @param screenID	由ScreenCode类静态常量定义
+		 */		
 		public function openScreen( screenID:String ):void
 		{
+			gController.closeCrtGame();
 			sController.openScreen( screenID );
 		}
 		
-		public function openGame(gameID:String):void
+		/**
+		 * 根据游戏ID打开指定游戏，封装了资源加载逻辑
+		 * @param gameID	由GameCode类静态常量定义
+		 * @param guide		是否包含指引步骤
+		 */		
+		public function openGame(gameID:String, guide:Boolean=false):void
 		{
-			sController.delCrtScreen();
-			gController.openGame(gameID);
+			sController.clean(true);
+			gController.openGame(gameID, guide);
 		}
 		
 		/**

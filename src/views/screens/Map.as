@@ -66,18 +66,14 @@ package views.screens
 		{
 			var name:String = (e.target as Object).name;
 			trace(name);
-			return;
 			switch(name)
 			{
 				case ScreenCode.MAIN:
-					break;
-				case ScreenCode.GAME_LIST:
-					break;
 				case ScreenCode.BOARD:
-					break;
 				case ScreenCode.MORE:
-					break;
 				case ScreenCode.PARENTS:
+					return;
+				case ScreenCode.GAME_LIST:
 					break;
 			}
 			MC.instance.openScreen( name );

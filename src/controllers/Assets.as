@@ -15,6 +15,7 @@ package controllers
 	public class Assets extends Singleton
 	{
 		public static const MAIN_UI:String = "mainUI";
+		public static const Games:String = "games";
 		
 		protected var _dic:Dictionary = new Dictionary();
 		
