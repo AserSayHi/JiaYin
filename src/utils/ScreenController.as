@@ -1,6 +1,5 @@
 package utils
 {
-	import com.greensock.TweenLite;
 	import com.pamakids.utils.Singleton;
 	
 	import flash.filesystem.File;
@@ -10,6 +9,7 @@ package utils
 	
 	import models.code.ScreenCode;
 	
+	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.utils.AssetManager;
 	
@@ -27,8 +27,9 @@ package utils
 		
 		private var assets:AssetManager;
 		private var mc:MC;
-		private var bg:Image;
-		private var crtScreen:BasicScreen;
+		private var mainBG:Image;
+		private var prevScreen:BasicScreen = null;
+		private var crtScreen:BasicScreen = null;
 		
 		public function openScreen(ID:String, args:*=null):void
 		{
@@ -37,37 +38,45 @@ package utils
 				loadAssets(ID, args);
 				return;
 			}
-			delCrtScreen();
-			switch(ID)
-			{
-				case ScreenCode.MAP:
-					crtScreen = new Map();
-					break;
-				case ScreenCode.BOARD:
-					break;
-				case ScreenCode.GAME_LIST:
-					crtScreen = new Games();
-					break;
-				case ScreenCode.LOGIN:
-					break;
-				case ScreenCode.MORE:
-					break;
-				case ScreenCode.PARENTS:
-					break;
-				case ScreenCode.REGISTER:
-					break;
-			}
-			addScreen( crtScreen );
+			prevScreen = crtScreen;
+			if(prevScreen)
+				prevScreen.touchable = false;
+			crtScreen = screenFactory( ID, args );
+			crtScreen.addEventListener( BasicScreen.INITIALIZED, onInitialized);
+			crtScreen.initialize();
 		}
 		
-		private function addScreen(screen:BasicScreen):void
+		private function onInitialized():void
 		{
-			screen.alpha = 0;
-			screen.touchable = false;
-			mc.addToStage3D( screen );
-			TweenLite.to( screen, 1, {alpha: 1, onComplete:function():void{
-				screen.touchable = true;
-			}});
+			showCrtScreen();
+		}
+		private function showCrtScreen():void
+		{
+			crtScreen.touchable = false;
+			mc.addToStage3D( crtScreen );
+			crtScreen.alpha = 0;
+			if(prevScreen)
+				prevScreen.parent.swapChildren( prevScreen, crtScreen );
+			StatusManager.getInstance().addFunc( animation, 50 );
+		}
+		private function animation():void
+		{
+			crtScreen.alpha += 0.1;
+			trace(crtScreen.alpha);
+			if(mainLoading)
+				mainLoading.alpha = 1 - crtScreen.alpha;
+			if(prevScreen)
+				prevScreen.alpha = 1 - crtScreen.alpha;
+			if(crtScreen.alpha >= 1)
+			{
+				StatusManager.getInstance().delFunc( animation );
+				crtScreen.alpha = 1;
+				crtScreen.touchable = true;
+				if(mainLoading && mainLoading.parent)
+					mainLoading.parent.removeChild( mainLoading );
+				mainLoading = null;
+				delDisplayObject(prevScreen);
+			}
 		}
 		
 		private var mainLoading:MainLoading;
@@ -82,46 +91,48 @@ package utils
 			assets.loadQueue( function(ratio:Number):void{
 				if(ratio == 1)		//加载完成
 				{
-					bg = Assets.getImage( assets, "mainBG" );
-					mc.addToStage3D( bg, true );
+					mainBG = Assets.getImage( assets, "mainBG" );
+					mc.addToStage3D( mainBG, true );
 					openScreen( ID, args );
-					TweenLite.to( mainLoading, 1.5, {alpha: 0, onComplete:function():void{
-						mc.delChild( mainLoading );
-					}});
 				}
 			});
 		}
 		
-		/**
-		 * 关闭当前显示页面
-		 * @param clearBG 清除场景资源
-		 */		
-		private function delCrtScreen():void
+		private function screenFactory(id:String, args:*=null):BasicScreen
 		{
-			var screen:BasicScreen = crtScreen;
-			crtScreen = null;
-			if(screen)
+			var screen:BasicScreen;
+			switch(id)
 			{
-				if(screen.parent)
-					screen.parent.removeChild( screen );
-				screen.dispose();
+				case ScreenCode.MAP:
+					screen = new Map();
+					break;
+				case ScreenCode.BOARD:
+					break;
+				case ScreenCode.GAME_LIST:
+					screen = new Games();
+					break;
+				case ScreenCode.LOGIN:
+					break;
+				case ScreenCode.MORE:
+					break;
+				case ScreenCode.PARENTS:
+					break;
+				case ScreenCode.REGISTER:
+					break;
 			}
+			return screen;
 		}
-		private function delBG():void
-		{
-			if(!bg)
-				return;
-			mc.delChild( bg );
-			bg.dispose();
-			bg = null;
-		}
+		
 		/**
 		 * 清理方法
 		 * @param disposeAssets	释放场景相关资源，释放后再次打开场景时需要重新加载资源，若值为false，则此方法只是清除当前显示场景，不会释放Assets.MainUI中的纹理资源
 		 */		
 		public function clean(disposeAssets:Boolean=false):void
 		{
-			delCrtScreen();
+			delDisplayObject( crtScreen );
+			crtScreen = null;
+			delDisplayObject( prevScreen );
+			prevScreen = null;
 			if(disposeAssets)
 			{
 				delBG();
@@ -129,6 +140,23 @@ package utils
 				this.assets = null;
 				Assets.instance.delAssetsManager( Assets.MAIN_UI );
 			}
+		}
+		
+		private function delBG():void
+		{
+			if(!mainBG)
+				return;
+			mc.delChild( mainBG );
+			mainBG.dispose();
+			mainBG = null;
+		}
+		
+		private function delDisplayObject(obj:DisplayObject):void
+		{
+			if(!obj)
+				return;
+			obj.removeEventListeners( BasicScreen.INITIALIZED );
+			obj.removeFromParent( true );
 		}
 	}
 }

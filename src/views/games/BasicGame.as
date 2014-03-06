@@ -5,8 +5,10 @@ package views.games
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
+
 	/**
 	 * 游戏基类
 	 * @author kc2ong
@@ -16,16 +18,14 @@ package views.games
 		public static const INITIALIZED:String = "initialized";
 		public static const RESULT_SUCCESSED:String = "successed";
 		public static const RESULT_FAILED:String = "failed";
+		public static const ENDED:String = "ended";
 		
 		public function BasicGame()
 		{
 			super();
-			
-			assets = Assets.instance.getAssetsManager( Assets.Games );
 		}
 		
 		protected var assets:AssetManager;
-		
 		protected function getImage(name:String):Image
 		{
 			if(assets)
@@ -34,15 +34,22 @@ package views.games
 				return null;
 		}
 		
+		final public function initialize():void
+		{
+			assets = Assets.instance.getAssetsManager( Assets.Games );
+			initGameContent();
+			dispatchEvent( new Event( INITIALIZED ));
+		}
+		
 		private var BG:Image;
 		/** 初始化游戏背景 */
-		protected function initBG(texture:Texture):void
+		final protected function setGameBG(texture:Texture):void
 		{
-			BG = new Image(texture);
+			BG = new Image( texture );
 			MC.instance.addToStage3D( BG, true );
 		}
 		/** 清除游戏背景 */
-		protected function delBG():void
+		protected function delGameBG():void
 		{
 			MC.instance.delChild( BG );
 			BG.dispose();
@@ -50,10 +57,7 @@ package views.games
 		}
 		
 		//override functions=============================================================
-		/**
-		 * @param teach	是否需要打开指引
-		 */		
-		public function initialize(teach:Boolean=false):void
+		protected function initGameContent():void
 		{
 		}
 		public function start():void

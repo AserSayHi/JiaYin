@@ -2,7 +2,6 @@ package views.screens
 {
 	import flash.utils.Dictionary;
 	
-	import controllers.Assets;
 	import controllers.MC;
 	
 	import models.PosVO;
@@ -17,25 +16,30 @@ package views.screens
 	{
 		public function Map()
 		{
-			init();
+		}
+		
+		override protected function initScreenContent():void
+		{
+			initMenu();
+			initBtns();
+		}
+		
+		private function initMenu():void
+		{
+			menu = [
+				ScreenCode.MAIN, 			//主线内容
+				ScreenCode.GAME_LIST,		//游戏列表
+				ScreenCode.BOARD,			//your board
+				ScreenCode.MORE,			//拓展页面
+				ScreenCode.PARENTS			//父母登陆页面
+			];
 		}
 		
 		private var headIcon:Image;
-		private function init():void
-		{
-			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
-			initBtns();
-		}
 		/**
 		 * 菜单
 		 */		
-		private const menu:Array = [
-			ScreenCode.MAIN, 			//主线内容
-			ScreenCode.GAME_LIST,		//游戏列表
-			ScreenCode.BOARD,			//your board
-			ScreenCode.MORE,			//拓展页面
-			ScreenCode.PARENTS			//父母登陆页面
-		];
+		private var menu:Array;
 		private var btns:Dictionary;
 		
 		private function initBtns():void
@@ -91,7 +95,6 @@ package views.screens
 				btn = null;
 			}
 			btns = null;
-			assets = null;
 			super.dispose();
 		}
 	}

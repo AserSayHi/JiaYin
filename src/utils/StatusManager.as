@@ -36,8 +36,16 @@ package utils
 				obj=dicFunc[func];
 				if (time - obj.last > obj.rate)
 				{
+					if(obj.times == obj.maxTimes)
+					{
+						if(obj.complete)
+							obj.complete();
+						delFunc( func as Function );
+						return;
+					}
 					func();
 					obj.last=time - (time - obj.last) % (obj.rate);
+					obj.times += 1;
 				}
 			}
 		}
@@ -45,20 +53,28 @@ package utils
 		private var dicFunc:Dictionary = new Dictionary();;
 		
 		/**
-		 * @param func	方法
+		 * @param func	被调用的方法
 		 * @param rate	调用频率，单位：毫秒
-		 */
-		public function addFunc(func:Function, rate:Number=1000):void
+		 * @param times	调用次数，默认为-1，即无次数上限
+		 * @param onComplete 调用完成
+		 */		
+		public function addFunc(func:Function, rate:Number=1000, times:int=-1, onComplete:Function=null):void
 		{
 			if (dicFunc.hasOwnProperty(func))
 				return;
-			dicFunc[func]={rate: rate, last: getTimer()};
+			dicFunc[func]={rate: rate, last: getTimer(), times: 0, maxTimes: times, complete: onComplete};
 		}
 		
 		public function delFunc(func:Function):void
 		{
-			if (dicFunc.hasOwnProperty(func))
-				delete dicFunc[func];
+			for(var obj:Object in dicFunc)
+			{
+				if(obj == func)
+				{
+					delete dicFunc[func];
+					return;
+				}
+			}
 		}
 		
 		public function clear():void
