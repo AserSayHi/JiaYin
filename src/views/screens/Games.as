@@ -4,9 +4,11 @@ package views.screens
 	
 	import models.PosVO;
 	import models.code.GameCode;
+	import models.code.ScreenCode;
 	
 	import starling.display.Button;
 	import starling.events.Event;
+
 	/**
 	 * 游戏列表
 	 * @author Administrator
@@ -18,18 +20,35 @@ package views.screens
 		{
 		}
 		
+		
+		private var btn_start:Button;
+		private var btn_map:Button;
 		override protected function initScreenContent():void
 		{
-			var btn:Button = new Button(assets.getTexture("btn_startGame"));
-			btn.x = PosVO.REAL_WIDTH - btn.width >> 1;
-			btn.y = PosVO.REAL_HEIGHT - btn.height >> 1;
-			this.addChild( btn );
-			btn.addEventListener(Event.TRIGGERED, onTriggered);
+			btn_start = new Button(assets.getTexture("btn_startGame"));
+			btn_start.x = PosVO.REAL_WIDTH - btn_start.width >> 1;
+			btn_start.y = PosVO.REAL_HEIGHT - btn_start.height >> 1;
+			this.addChild( btn_start );
+			btn_start.addEventListener(Event.TRIGGERED, onTriggered);
+			
+			btn_map = new Button(assets.getTexture("btn_map"));
+			btn_map.x = btn_start.x;
+			btn_map.y = btn_start.y + 60;
+			this.addChild( btn_map );
+			btn_map.addEventListener(Event.TRIGGERED, onTriggered);
 		}
 		
 		private function onTriggered(e:Event):void
 		{
-			MC.instance.openGame( GameCode.TEMP, true );
+			switch(e.target)
+			{
+				case btn_start:
+					MC.instance.openGame( GameCode.TEMP, true );
+					break;
+				case btn_map:
+					MC.instance.openScreen( ScreenCode.MAP );
+					break;
+			}
 		}		
 		
 	}
