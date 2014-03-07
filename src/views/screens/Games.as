@@ -43,13 +43,31 @@ package views.screens
 			switch(e.target)
 			{
 				case btn_start:
-					MC.instance.openGame( GameCode.TEMP, true );
+					MC.instance.openGame( GameCode.TEMP, false );
 					break;
 				case btn_map:
 					MC.instance.openScreen( ScreenCode.MAP );
 					break;
 			}
-		}		
+		}
+		
+		
+		override public function dispose():void
+		{
+			if(btn_start)
+			{
+				btn_start.removeEventListener(Event.TRIGGERED, onTriggered);
+				btn_start.removeFromParent( true );
+				btn_start = null;
+			}
+			if(btn_map)
+			{
+				btn_map.removeEventListener(Event.TRIGGERED, onTriggered);
+				btn_map.removeFromParent( true );
+				btn_map = null;
+			}
+			super.dispose();
+		}
 		
 	}
 }
