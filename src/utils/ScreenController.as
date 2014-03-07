@@ -15,6 +15,7 @@ package utils
 	
 	import views.components.MainLoading;
 	import views.screens.BasicScreen;
+	import views.screens.Content;
 	import views.screens.Games;
 	import views.screens.Map;
 	
@@ -62,7 +63,6 @@ package utils
 		private function animation():void
 		{
 			crtScreen.alpha += 0.1;
-			trace(crtScreen.alpha);
 			if(mainLoading)
 				mainLoading.alpha = 1 - crtScreen.alpha;
 			if(prevScreen)
@@ -118,6 +118,9 @@ package utils
 				case ScreenCode.PARENTS:
 					break;
 				case ScreenCode.REGISTER:
+					break;
+				case ScreenCode.MAIN:
+					screen = new Content();
 					break;
 			}
 			return screen;

@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:8b3118bafd8a7f5e99234622e6e372b7$ -->
+<!-- $TexturePacker:SmartUpdate:93edace0cf00dfde635d30ca4ac29de9$ -->
 <TextureAtlas imagePath="assets.png">
-    <SubTexture name="btn_back" x="688" y="62" width="108" height="28"/>
-    <SubTexture name="btn_board" x="688" y="2" width="182" height="28"/>
-    <SubTexture name="btn_games" x="504" y="62" width="182" height="28"/>
-    <SubTexture name="btn_login" x="798" y="32" width="108" height="28"/>
-    <SubTexture name="btn_main" x="504" y="32" width="182" height="28"/>
-    <SubTexture name="btn_map" x="504" y="2" width="182" height="28"/>
-    <SubTexture name="btn_more" x="320" y="62" width="182" height="28"/>
-    <SubTexture name="btn_music_closed" x="162" y="2" width="156" height="84" frameX="-2" frameY="0" frameWidth="158" frameHeight="84"/>
-    <SubTexture name="btn_music_opend" x="2" y="2" width="158" height="84"/>
-    <SubTexture name="btn_parents" x="320" y="32" width="182" height="28"/>
-    <SubTexture name="btn_register" x="688" y="32" width="108" height="28"/>
-    <SubTexture name="btn_startGame" x="320" y="2" width="182" height="28"/>
+    <SubTexture name="UIboard" x="2" y="2" width="854" height="168"/>
+    <SubTexture name="btn_back" x="1508" y="130" width="108" height="28"/>
+    <SubTexture name="btn_board" x="1302" y="32" width="182" height="28"/>
+    <SubTexture name="btn_games" x="1302" y="2" width="182" height="28"/>
+    <SubTexture name="btn_login" x="1486" y="32" width="108" height="28"/>
+    <SubTexture name="btn_main" x="1226" y="118" width="182" height="28"/>
+    <SubTexture name="btn_map" x="1168" y="88" width="182" height="28"/>
+    <SubTexture name="btn_more" x="1042" y="118" width="182" height="28"/>
+    <SubTexture name="btn_music_closed" x="1144" y="2" width="156" height="84" frameX="-2" frameY="0" frameWidth="158" frameHeight="84"/>
+    <SubTexture name="btn_music_opend" x="984" y="2" width="158" height="84"/>
+    <SubTexture name="btn_parents" x="984" y="88" width="182" height="28"/>
+    <SubTexture name="btn_register" x="1486" y="2" width="108" height="28"/>
+    <SubTexture name="btn_startGame" x="858" y="124" width="182" height="28"/>
+    <SubTexture name="headIcon_0" x="858" y="2" width="124" height="120" frameX="-2" frameY="-6" frameWidth="128" frameHeight="128"/>
+    <SubTexture name="headIcon_1" x="1596" y="2" width="112" height="126" frameX="-9" frameY="-2" frameWidth="128" frameHeight="128"/>
+    <SubTexture name="ui_btn_board" x="1410" y="134" width="96" height="34"/>
+    <SubTexture name="ui_btn_games" x="1450" y="62" width="96" height="34"/>
+    <SubTexture name="ui_btn_map" x="1410" y="98" width="96" height="34"/>
+    <SubTexture name="ui_btn_parents" x="1352" y="62" width="96" height="34"/>
 </TextureAtlas>

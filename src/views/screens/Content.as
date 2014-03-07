@@ -1,5 +1,8 @@
 package views.screens
 {
+	import models.PosVO;
+	
+	import views.components.UI_contentScreen;
 	import views.units.BasicUnit;
 
 	/**
@@ -17,6 +20,21 @@ package views.screens
 		public function Content()
 		{
 			super();
+		}
+		
+		override protected function initScreenContent():void
+		{
+			initUI();
+		}
+		
+		private var UI:UI_contentScreen;
+		private function initUI():void
+		{
+			UI = new UI_contentScreen();
+			this.addChild( UI );
+			UI.pivotX = UI.width >> 1;
+			UI.x = PosVO.REAL_WIDTH >> 1;
+			UI.y = 0;
 		}
 	}
 }

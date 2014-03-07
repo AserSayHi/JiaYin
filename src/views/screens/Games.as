@@ -1,6 +1,5 @@
 package views.screens
 {
-	import controllers.Assets;
 	import controllers.MC;
 	
 	import models.PosVO;
@@ -8,24 +7,18 @@ package views.screens
 	
 	import starling.display.Button;
 	import starling.events.Event;
-
+	/**
+	 * 游戏列表
+	 * @author Administrator
+	 * 
+	 */
 	public class Games extends BasicScreen
 	{
 		public function Games()
 		{
-			super();
-			
-			initialize();
 		}
 		
-		private function initialize():void
-		{
-			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
-			
-			this.addEventListener( Event.ADDED_TO_STAGE, onAdded);
-		}
-		
-		private function onAdded(e:Event):void
+		override protected function initScreenContent():void
 		{
 			var btn:Button = new Button(assets.getTexture("btn_startGame"));
 			btn.x = PosVO.REAL_WIDTH - btn.width >> 1;

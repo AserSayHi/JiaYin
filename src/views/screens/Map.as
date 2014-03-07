@@ -72,11 +72,11 @@ package views.screens
 			trace(name);
 			switch(name)
 			{
-				case ScreenCode.MAIN:
 				case ScreenCode.BOARD:
 				case ScreenCode.MORE:
 				case ScreenCode.PARENTS:
 					return;
+				case ScreenCode.MAIN:
 				case ScreenCode.GAME_LIST:
 					break;
 			}

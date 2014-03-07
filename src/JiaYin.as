@@ -34,6 +34,7 @@ package
 			s.stage.stageHeight = PosVO.LOGIC_HEIGHT * PosVO.scale;
 			s.viewPort = rect;
 			s.showStats = true;
+			s.showStatsAt("center", "center");
 			s.enableErrorChecking = true;
 			s.start();
 		}

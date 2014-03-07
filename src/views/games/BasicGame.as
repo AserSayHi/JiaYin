@@ -45,12 +45,20 @@ package views.games
 		/** 初始化游戏背景 */
 		final protected function setGameBG(texture:Texture):void
 		{
-			BG = new Image( texture );
-			MC.instance.addToStage3D( BG, true );
+			if(BG && BG.texture == texture)
+				return;
+			if(!BG)
+			{
+				BG = new Image( texture );
+				MC.instance.addToStage3D( BG, true );
+			}else
+				BG.texture = texture;
 		}
 		/** 清除游戏背景 */
 		protected function delGameBG():void
 		{
+			if(!BG)
+				return;
 			MC.instance.delChild( BG );
 			BG.dispose();
 			BG = null;
