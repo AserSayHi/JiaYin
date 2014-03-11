@@ -25,6 +25,15 @@ package utils
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
+		private var ifPause:Boolean = false;
+		public function pause():void
+		{
+			ifPause = true;
+		}
+		public function start():void
+		{
+			ifPause = false;
+		}
 		protected function onEnterFrame(e:Event):void
 		{
 			if(ifPause)
@@ -60,40 +69,33 @@ package utils
 		 */		
 		public function addFunc(func:Function, rate:Number=1000, times:int=-1, onComplete:Function=null):void
 		{
-			if (dicFunc.hasOwnProperty(func))
+			if(checkFunc( func ))
 				return;
 			dicFunc[func]={rate: rate, last: getTimer(), times: 0, maxTimes: times, complete: onComplete};
 		}
 		
 		public function delFunc(func:Function):void
 		{
-			for(var obj:Object in dicFunc)
-			{
-				if(obj == func)
-				{
-					delete dicFunc[func];
-					return;
-				}
-			}
+			if( checkFunc(func) )
+				delete dicFunc[func];
 		}
 		
 		public function clear():void
 		{
 			for (var obj:Object in dicFunc)
 			{
-				delete dicFunc[obj];
+				delFunc(obj as Function);
 			}
 		}
 		
-		private var ifPause:Boolean = false;
-		public function pause():void
+		public function checkFunc(func:Function):Boolean
 		{
-			ifPause = true;
-		}
-		
-		public function restart():void
-		{
-			ifPause = false;
+			for(var obj:Object in dicFunc)
+			{
+				if(obj == func)
+					return true;
+			}
+			return false;
 		}
 	}
 }

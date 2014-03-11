@@ -21,9 +21,21 @@ package views.screens
 		}
 		
 		
-		private var btn_start:Button;
-		private var btn_map:Button;
 		override protected function initScreenContent():void
+		{
+			test();
+			getGameVO();
+		}
+		
+		private function getGameVO():void
+		{
+		}
+		
+		private function initList():void
+		{
+		}
+		
+		private function test():void
 		{
 			btn_start = new Button(assets.getTexture("btn_startGame"));
 			btn_start.x = PosVO.REAL_WIDTH - btn_start.width >> 1;
@@ -37,13 +49,15 @@ package views.screens
 			this.addChild( btn_map );
 			btn_map.addEventListener(Event.TRIGGERED, onTriggered);
 		}
-		
+		private var btn_start:Button;
+		private var btn_map:Button;
 		private function onTriggered(e:Event):void
 		{
 			switch(e.target)
 			{
 				case btn_start:
-					MC.instance.openGame( GameCode.TEMP, false );
+//					MC.instance.openGame( GameCode.RunStop, false );
+					MC.instance.openGame( GameCode.AppleBanana, false );
 					break;
 				case btn_map:
 					MC.instance.openScreen( ScreenCode.MAP );

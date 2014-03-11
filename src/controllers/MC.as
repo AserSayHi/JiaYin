@@ -12,8 +12,6 @@ package controllers
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	
-	import utils.GameController;
-	import utils.ScreenController;
 	
 	import views.components.Stage2D;
 	import views.components.Stage3D;
@@ -62,7 +60,7 @@ package controllers
 		 */		
 		public function openScreen( screenID:String ):void
 		{
-			gController.closeCrtGame();
+			gController.closeGame();
 			sController.openScreen( screenID );
 		}
 		

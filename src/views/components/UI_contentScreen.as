@@ -29,11 +29,7 @@ package views.components
 		private var assets:AssetManager;
 		private var bg:Image;
 		private var head:Image;
-		private var btn_games:Button;
-		private var btn_board:Button;
-		private var btn_parents:Button;
 		private var btn_sound:Button;
-		private var btn_map:Button;
 		private var menu:Dictionary;
 		private function init():void
 		{
@@ -76,6 +72,15 @@ package views.components
 		{
 			var btn:Button = e.target as Button;
 			trace(btn.name);
+			switch(btn.name)
+			{
+				case ScreenCode.BOARD:
+				case ScreenCode.MORE:
+				case ScreenCode.PARENTS:
+					return;
+				case ScreenCode.GAME_LIST:
+					break;
+			}
 			MC.instance.openScreen( btn.name );
 		}
 		
@@ -144,6 +149,12 @@ package views.components
 				bg.touchable = true;
 				trace(isHide);
 			}});
+		}
+		
+		override public function dispose():void
+		{
+			
+			super.dispose();
 		}
 	}
 }

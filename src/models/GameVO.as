@@ -6,8 +6,10 @@ package models
 		{
 		}
 		
+		public var icon:String;
 		public var id:String;
 		public var name:String;
+		
 		/**
 		 * 
 		 */		

@@ -1,12 +1,9 @@
-package utils
+package controllers
 {
 	import com.greensock.TweenLite;
 	import com.pamakids.utils.Singleton;
 	
 	import flash.filesystem.File;
-	
-	import controllers.Assets;
-	import controllers.MC;
 	
 	import models.code.GameCode;
 	import models.code.ScreenCode;
@@ -14,11 +11,15 @@ package utils
 	import starling.events.Event;
 	import starling.utils.AssetManager;
 	
+	import utils.StatusManager;
+	
 	import views.components.MainLoading;
 	import views.games.BasicGame;
-	import views.games.Game1;
+	import views.games.Game_AppleBanana;
+	import views.games.Game_RunStop;
 	import views.guides.BasicGuide;
-	import views.guides.Guide1;
+	import views.guides.Guide_AppleBanana;
+	import views.guides.Guide_RunStop;
 	
 
 	public class GameController extends Singleton
@@ -96,6 +97,7 @@ package utils
 					TweenLite.to( loading, 0.5, {alpha: 0, onComplete:function():void{
 						mc.delChild( loading );
 						loading = null;
+						crtGuide.play();
 					}});
 					break;
 				case BasicGuide.ENDED:
@@ -159,7 +161,7 @@ package utils
 			}
 		}
 		
-		public function closeCrtGame():void
+		public function closeGame():void
 		{
 		}
 		
@@ -168,8 +170,11 @@ package utils
 			var temp:BasicGame;
 			switch(id)
 			{
-				case GameCode.TEMP:		//测试
-					temp = new Game1();
+				case GameCode.RunStop:		//测试
+					temp = new Game_RunStop();
+					break;
+				case GameCode.AppleBanana:		//测试
+					temp = new Game_AppleBanana();
 					break;
 			}
 			return temp;
@@ -180,8 +185,11 @@ package utils
 			var guide:BasicGuide;
 			switch(id)
 			{
-				case GameCode.TEMP:
-					guide = new Guide1();
+				case GameCode.RunStop:
+					guide = new Guide_RunStop();
+					break;
+				case GameCode.AppleBanana:
+					guide = new Guide_AppleBanana();
 					break;
 			}
 			return guide;

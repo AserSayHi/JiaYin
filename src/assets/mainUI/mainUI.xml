@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:93edace0cf00dfde635d30ca4ac29de9$ -->
-<TextureAtlas imagePath="assets.png">
+<!-- $TexturePacker:SmartUpdate:15cf41070defbf0cf77834319e8d7acd$ -->
+<TextureAtlas imagePath="mainUI.png">
     <SubTexture name="UIboard" x="2" y="2" width="854" height="168"/>
     <SubTexture name="btn_back" x="1508" y="130" width="108" height="28"/>
     <SubTexture name="btn_board" x="1302" y="32" width="182" height="28"/>

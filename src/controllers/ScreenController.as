@@ -1,11 +1,9 @@
-package utils
+package controllers
 {
 	import com.pamakids.utils.Singleton;
 	
 	import flash.filesystem.File;
 	
-	import controllers.Assets;
-	import controllers.MC;
 	
 	import models.code.ScreenCode;
 	
@@ -18,6 +16,7 @@ package utils
 	import views.screens.Content;
 	import views.screens.Games;
 	import views.screens.Map;
+	import utils.StatusManager;
 	
 	public class ScreenController extends Singleton
 	{

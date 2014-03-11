@@ -37,7 +37,7 @@ package views.games
 		final public function initialize():void
 		{
 			assets = Assets.instance.getAssetsManager( Assets.Games );
-			initGameContent();
+			initHandler();
 			dispatchEvent( new Event( INITIALIZED ));
 		}
 		
@@ -65,7 +65,7 @@ package views.games
 		}
 		
 		//override functions=============================================================
-		protected function initGameContent():void
+		protected function initHandler():void
 		{
 		}
 		public function start():void
@@ -82,6 +82,13 @@ package views.games
 		}
 		public function continueGame():void
 		{
+		}
+		override public function dispose():void
+		{
+			delGameBG();
+			assets.dispose();
+			assets = null;
+			super.dispose();
 		}
 		//================================================================================
 	}

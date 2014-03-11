@@ -7,6 +7,7 @@ package models.code
 	 */	
 	public class GameCode
 	{
-		public static const TEMP:String = "temp";
+		public static const RunStop:String = "runstop";
+		public static const AppleBanana:String = "appleBanana";
 	}
 }
