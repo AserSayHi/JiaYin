@@ -1,13 +1,19 @@
 package views.games
 {
 	import controllers.Assets;
+	import controllers.GameController;
 	import controllers.MC;
 	
+	import models.code.ScreenCode;
+	
+	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
+	
+	import utils.StatusManager;
 
 	/**
 	 * 游戏基类
@@ -26,6 +32,9 @@ package views.games
 		}
 		
 		protected var assets:AssetManager;
+		protected var statusM:StatusManager;
+		protected var controller:GameController;
+		
 		protected function getImage(name:String):Image
 		{
 			if(assets)
@@ -37,8 +46,33 @@ package views.games
 		final public function initialize():void
 		{
 			assets = Assets.instance.getAssetsManager( Assets.Games );
+			statusM = StatusManager.getInstance();
+			controller = MC.instance.getGameController();
+			
+			initHomeBtn();
 			initHandler();
 			dispatchEvent( new Event( INITIALIZED ));
+		}
+		
+		private var btn_home:Button;
+		private function initHomeBtn():void
+		{
+			btn_home = new Button( assets.getTexture( "btn_home_up" ) );
+//			btn_home.downState = assets.getTexture( "btn_home_down" );
+			btn_home.x = btn_home.y = 10;
+			this.addChild( btn_home );
+			btn_home.addEventListener( Event.TRIGGERED, onTriggered );
+		}
+		
+		/**
+		 * 终止游戏，并退出
+		 * @param e
+		 */		
+		private function onTriggered(e:Event):void
+		{
+			//关闭游戏，并离开游戏场景
+			controller.closeGame();
+			MC.instance.getScreenController().openScreen( ScreenCode.MAP );
 		}
 		
 		private var BG:Image;
@@ -86,8 +120,15 @@ package views.games
 		override public function dispose():void
 		{
 			delGameBG();
-			assets.dispose();
+			if( btn_home )
+			{
+				btn_home.removeEventListener(Event.TRIGGERED, onTriggered );
+				btn_home.removeFromParent( true );
+				btn_home = null;
+			}
 			assets = null;
+			controller = null;
+			statusM = null;
 			super.dispose();
 		}
 		//================================================================================

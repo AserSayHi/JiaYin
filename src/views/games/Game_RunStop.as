@@ -61,6 +61,7 @@ package views.games
 		
 		override public function dispose():void
 		{
+			super.dispose();
 		}
 	}
 }

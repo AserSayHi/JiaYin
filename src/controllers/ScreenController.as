@@ -4,19 +4,19 @@ package controllers
 	
 	import flash.filesystem.File;
 	
-	
 	import models.code.ScreenCode;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.utils.AssetManager;
 	
+	import utils.StatusManager;
+	
 	import views.components.MainLoading;
 	import views.screens.BasicScreen;
 	import views.screens.Content;
 	import views.screens.Games;
 	import views.screens.Map;
-	import utils.StatusManager;
 	
 	public class ScreenController extends Singleton
 	{
@@ -31,6 +31,10 @@ package controllers
 		private var prevScreen:BasicScreen = null;
 		private var crtScreen:BasicScreen = null;
 		
+		/**
+		 * 根据场景ID打开指定场景，内部封装了资源的加载逻辑
+		 * @param screenID	由ScreenCode类静态常量定义
+		 */	
 		public function openScreen(ID:String, args:*=null):void
 		{
 			if(!assets)
@@ -90,7 +94,7 @@ package controllers
 			assets.loadQueue( function(ratio:Number):void{
 				if(ratio == 1)		//加载完成
 				{
-					mainBG = Assets.getImage( assets, "mainBG" );
+					mainBG = new Image( assets.getTexture( "mainBG" ));
 					mc.addToStage3D( mainBG, true );
 					openScreen( ID, args );
 				}

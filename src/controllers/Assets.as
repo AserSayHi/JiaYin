@@ -43,7 +43,8 @@ package controllers
 		{
 			if(_dic.hasOwnProperty(name))
 			{
-				_dic[name].dispose();
+//				_dic[name].dispose();
+				_dic[name].purge()
 				delete _dic[name];
 			}
 		}

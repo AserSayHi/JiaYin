@@ -7,6 +7,7 @@ package views.components
 	
 	import controllers.Assets;
 	import controllers.MC;
+	import controllers.ScreenController;
 	
 	import models.code.ScreenCode;
 	
@@ -31,18 +32,16 @@ package views.components
 		private var head:Image;
 		private var btn_sound:Button;
 		private var menu:Dictionary;
+		private var sController:ScreenController;
+		
 		private function init():void
 		{
+			sController = MC.instance.getScreenController();
 			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
 			menu = new Dictionary();
 			initBG();
 			initHeadImage();
-			initBtnSound();
 			initMenu();
-		}
-		
-		private function initBtnSound():void
-		{
 		}
 		
 		private function initMenu():void
@@ -71,7 +70,6 @@ package views.components
 		private function onTriggered(e:Event):void
 		{
 			var btn:Button = e.target as Button;
-			trace(btn.name);
 			switch(btn.name)
 			{
 				case ScreenCode.BOARD:
@@ -81,7 +79,7 @@ package views.components
 				case ScreenCode.GAME_LIST:
 					break;
 			}
-			MC.instance.openScreen( btn.name );
+			sController.openScreen( btn.name );
 		}
 		
 		private function initHeadImage():void
@@ -116,7 +114,6 @@ package views.components
 						break;
 					case TouchPhase.ENDED:
 						var crtY:int = touch.getLocation( this ).y;
-						trace(startY, crtY);
 						if(crtY - startY >= 0)		//下拉
 							show();
 						else if(crtY - startY <= 0)	//上移
@@ -136,7 +133,6 @@ package views.components
 			TweenLite.to( this, .5, { y: 0, ease:Cubic.easeOut, onComplete: function():void{
 				isHide = false;
 				bg.touchable = true;
-				trace(isHide);
 			}});
 		}
 		private function hide():void
@@ -147,13 +143,15 @@ package views.components
 			TweenLite.to( this, .5, { y: targetY, ease:Cubic.easeOut, onComplete: function():void{
 				isHide = true;
 				bg.touchable = true;
-				trace(isHide);
 			}});
 		}
 		
 		override public function dispose():void
 		{
-			
+			TweenLite.killTweensOf( this );
+			menu = null;
+			assets = null;
+			sController = null;
 			super.dispose();
 		}
 	}

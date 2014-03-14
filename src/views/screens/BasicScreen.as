@@ -1,6 +1,8 @@
 package views.screens
 {
 	import controllers.Assets;
+	import controllers.MC;
+	import controllers.ScreenController;
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -20,6 +22,7 @@ package views.screens
 		}
 		
 		protected var assets:AssetManager;
+		protected var controller:ScreenController;
 		
 		final protected function getImage(name:String):Image
 		{
@@ -32,6 +35,7 @@ package views.screens
 		final public function initialize():void
 		{
 			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
+			controller = MC.instance.getScreenController();
 			initScreenContent();
 			dispatchEvent( new Event( INITIALIZED ) );
 		}

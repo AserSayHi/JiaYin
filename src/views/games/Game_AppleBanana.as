@@ -27,6 +27,11 @@ package views.games
 			image.y = 0;
 			this.addChild( image );
 			image.touchable = false;
+			image = Assets.getImage( assets, "image_other_1" );
+			image.x = PosVO.REAL_WIDTH - image.width >> 1;
+			image.y = PosVO.REAL_HEIGHT - image.height;
+			this.addChild( image );
+			image.touchable = false;
 		}
 		
 		override public function start():void

@@ -2,20 +2,19 @@ package views.guides
 {
 	import controllers.Assets;
 	
+	import events.GuideEvent;
+	
+	import models.PosVO;
+	
+	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.events.Event;
+	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 	
 	import utils.StatusManager;
 
-	/**
-	 * 教学指引动画基类，拓展类仅需覆盖以下方法
-	 */	
 	public class BasicGuide extends Sprite
 	{
-		public static const INITIALIZED:String = "initialized";
-		public static const ENDED:String = "ended";
-		
 		public function BasicGuide()
 		{
 			super();
@@ -28,17 +27,51 @@ package views.guides
 			mStatus = StatusManager.getInstance();
 			assets = Assets.instance.getAssetsManager( Assets.Games );
 			initHandler();			//指引初始化
-			dispatchEvent(new Event(INITIALIZED) );
+			this.addEventListener( GuideEvent.CHANGED, onStepChanged );
+			dispatchEvent( new GuideEvent(GuideEvent.INITIALIZED) );
 		}
-		/** 拓展类重写该方法 */
+		
+		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓拓展类重写以下该方法↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
 		protected function initHandler():void
 		{
 		}
-		
-		public function play():void
+		protected function startGuide():void
 		{
 		}
+		protected function onStepChanged(e:GuideEvent):void
+		{
+		}
+		/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑拓展类重写以上该方法↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 		
-		public var state:int = -1;
+		final protected function setBG(t:Texture):void
+		{
+			var image:Image = new Image(t);
+			this.addChild( image );
+			image.x = PosVO.REAL_WIDTH - PosVO.LOGIC_WIDTH >> 1;
+			image.y = PosVO.REAL_HEIGHT - PosVO.LOGIC_HEIGHT >> 1;
+			trace(image.x, image.y);
+		}
+		
+		final public function play():void
+		{
+			_state = 0;
+			startGuide();
+		}
+		private var _state:int = -1;
+		final protected function next():void
+		{
+			_state += 1;
+			dispatchEvent( new GuideEvent( GuideEvent.CHANGED, _state ) );
+		}
+		
+		final protected function end():void
+		{
+			dispatchEvent( new GuideEvent( GuideEvent.ENDED ));
+		}
+		
+		override public function dispose():void
+		{
+			super.dispose();
+		}
 	}
 }

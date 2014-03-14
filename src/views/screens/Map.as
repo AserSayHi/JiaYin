@@ -80,7 +80,7 @@ package views.screens
 				case ScreenCode.GAME_LIST:
 					break;
 			}
-			MC.instance.openScreen( name );
+			controller.openScreen( name );
 		}
 		
 		override public function dispose():void

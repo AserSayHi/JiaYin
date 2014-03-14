@@ -12,7 +12,6 @@ package controllers
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	
-	
 	import views.components.Stage2D;
 	import views.components.Stage3D;
 	
@@ -51,29 +50,9 @@ package controllers
 			stage2d = new Stage2D(main2d);
 			
 			//打开map场景
-			openScreen( ScreenCode.MAP );
+			sController.openScreen( ScreenCode.MAP );
 		}
 		
-		/**
-		 * 根据场景ID打开指定场景，内部封装了资源的加载逻辑
-		 * @param screenID	由ScreenCode类静态常量定义
-		 */		
-		public function openScreen( screenID:String ):void
-		{
-			gController.closeGame();
-			sController.openScreen( screenID );
-		}
-		
-		/**
-		 * 根据游戏ID打开指定游戏，封装了资源加载逻辑
-		 * @param gameID	由GameCode类静态常量定义
-		 * @param guide		是否包含指引步骤
-		 */		
-		public function openGame(gameID:String, guide:Boolean=false):void
-		{
-			sController.clean(true);
-			gController.openGame(gameID, guide);
-		}
 		
 		/**
 		 * @param child 
@@ -96,6 +75,16 @@ package controllers
 				if(child.parent)
 					child.parent.removeChild( child );
 			}
+		}
+		
+		public function getGameController():GameController
+		{
+			return gController;
+		}
+		
+		public function getScreenController():ScreenController
+		{
+			return sController;
 		}
 		
 	}
