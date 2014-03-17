@@ -18,6 +18,7 @@ package views.games
 			setGameBG( assets.getTexture( "mainBG" ));
 			initImage();
 			initKid();
+			initialized();
 		}
 		
 		private function initKid():void

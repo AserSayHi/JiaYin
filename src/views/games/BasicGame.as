@@ -48,17 +48,15 @@ package views.games
 			assets = Assets.instance.getAssetsManager( Assets.Games );
 			statusM = StatusManager.getInstance();
 			controller = MC.instance.getGameController();
-			
-			initHomeBtn();
 			initHandler();
-			dispatchEvent( new Event( INITIALIZED ));
+			initHomeBtn();
 		}
 		
 		private var btn_home:Button;
 		private function initHomeBtn():void
 		{
 			btn_home = new Button( assets.getTexture( "btn_home_up" ) );
-//			btn_home.downState = assets.getTexture( "btn_home_down" );
+			btn_home.downState = assets.getTexture( "btn_home_down" );
 			btn_home.x = btn_home.y = 10;
 			this.addChild( btn_home );
 			btn_home.addEventListener( Event.TRIGGERED, onTriggered );
@@ -96,6 +94,14 @@ package views.games
 			MC.instance.delChild( BG );
 			BG.dispose();
 			BG = null;
+		}
+		
+		/**
+		 * 初始化完成后调用该方法
+		 */		
+		final protected function initialized():void
+		{
+			dispatchEvent( new Event( INITIALIZED ));
 		}
 		
 		//override functions=============================================================

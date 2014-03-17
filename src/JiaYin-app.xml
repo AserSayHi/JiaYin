@@ -296,3 +296,8 @@
         <requestedDisplayResolution>high</requestedDisplayResolution>
     </iPhone>
 </application>
+
+<extensions>
+        <extensionID>com.pamakids.IFlytek</extensionID>
+    </extensions>
+</application>

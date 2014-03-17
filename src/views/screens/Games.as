@@ -72,7 +72,7 @@ package views.screens
 					break;
 				case btn_applebanana:
 					controller.clean(true);
-					gameController.openGame( GameCode.AppleBanana, true );
+					gameController.openGame( GameCode.AppleBanana, false );
 					break;
 				case btn_map:
 					controller.openScreen( ScreenCode.MAP );
