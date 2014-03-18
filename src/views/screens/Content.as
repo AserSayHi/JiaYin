@@ -22,9 +22,10 @@ package views.screens
 			super();
 		}
 		
-		override protected function initScreenContent():void
+		override protected function initHandler():void
 		{
 			initUI();
+			initCompleted();
 		}
 		
 		private var UI:UI_contentScreen;
@@ -35,6 +36,11 @@ package views.screens
 			UI.pivotX = UI.width >> 1;
 			UI.x = PosVO.REAL_WIDTH >> 1;
 			UI.y = 0;
+		}
+		
+		override public function dispose():void
+		{
+			super.dispose();
 		}
 	}
 }

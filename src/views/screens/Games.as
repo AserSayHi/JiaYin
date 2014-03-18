@@ -1,6 +1,6 @@
 package views.screens
 {
-	import controllers.GameController;
+	import utils.GameController;
 	import controllers.MC;
 	
 	import models.PosVO;
@@ -22,11 +22,12 @@ package views.screens
 		
 		private var gameController:GameController;
 		
-		override protected function initScreenContent():void
+		override protected function initHandler():void
 		{
 			gameController = MC.instance.getGameController();
 			getGameVO();
 			test();
+			initCompleted();
 		}
 		
 		private function getGameVO():void

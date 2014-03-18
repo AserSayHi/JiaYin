@@ -2,7 +2,7 @@ package views.screens
 {
 	import controllers.Assets;
 	import controllers.MC;
-	import controllers.ScreenController;
+	import utils.ScreenController;
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -10,7 +10,7 @@ package views.screens
 	import starling.utils.AssetManager;
 	
 	/**
-	 * 场景基类，拓展该类仅需重写 initScreenContent() 与 dispose方法
+	 * 场景基类，拓展该类须重写 initHandler()方法来完成初始化，初始化完成时调用initCompleted()派发完成事件
 	 * @author kc2ong
 	 */	
 	public class BasicScreen extends Sprite
@@ -21,32 +21,36 @@ package views.screens
 		{
 		}
 		
-		protected var assets:AssetManager;
-		protected var controller:ScreenController;
+		protected var assets:AssetManager = Assets.instance.getAssetsManager( Assets.MAIN_UI );
+		protected var controller:ScreenController = MC.instance.getScreenController();
 		
 		final protected function getImage(name:String):Image
 		{
 			if(assets)
-				return Assets.getImage( assets, name );
+				return new Image( assets.getTexture( name ));
 			else
 				return null;
 		}
 		
 		final public function initialize():void
 		{
-			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
-			controller = MC.instance.getScreenController();
-			initScreenContent();
-			dispatchEvent( new Event( INITIALIZED ) );
+			initHandler();
 		}
 		
-		protected function initScreenContent():void
+		protected function initHandler():void
 		{
+		}
+		
+		/**初始化完成时调用*/
+		final protected function initCompleted():void
+		{
+			dispatchEvent( new Event( INITIALIZED ) );
 		}
 		
 		override public function dispose():void
 		{
 			assets = null;
+			controller = null;
 			super.dispose();
 		}
 	}

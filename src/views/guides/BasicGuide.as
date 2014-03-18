@@ -28,7 +28,6 @@ package views.guides
 			assets = Assets.instance.getAssetsManager( Assets.Games );
 			initHandler();			//指引初始化
 			this.addEventListener( GuideEvent.CHANGED, onStepChanged );
-			dispatchEvent( new GuideEvent(GuideEvent.INITIALIZED) );
 		}
 		
 		/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓拓展类重写以下该方法↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
@@ -49,7 +48,12 @@ package views.guides
 			this.addChild( image );
 			image.x = PosVO.REAL_WIDTH - PosVO.LOGIC_WIDTH >> 1;
 			image.y = PosVO.REAL_HEIGHT - PosVO.LOGIC_HEIGHT >> 1;
-			trace(image.x, image.y);
+		}
+		
+		/**初始化完成时调用该方法派发事件*/
+		final protected function initCompleted():void
+		{
+			dispatchEvent( new GuideEvent(GuideEvent.INITIALIZED) );
 		}
 		
 		final public function play():void

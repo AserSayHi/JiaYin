@@ -15,7 +15,7 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>com.pamakids.JiaYin</id>
+	<id>JiaYin</id>
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>JiaYin</filename>
@@ -90,7 +90,6 @@
         <!-- The aspect ratio of the app ("portrait" or "landscape" or "any"). Optional. Mobile only. Default is the natural orientation of the device -->
 
         <aspectRatio>landscape</aspectRatio>
-        <!-- <aspectRatio>landscape</aspectRatio> -->
 
         <!-- Whether the app will begin auto-orienting on launch. Optional. Mobile only. Default false -->
 
@@ -295,7 +294,7 @@
 		]]></InfoAdditions>
         <requestedDisplayResolution>high</requestedDisplayResolution>
     </iPhone>
-</application>
+
 
 <extensions>
         <extensionID>com.pamakids.IFlytek</extensionID>

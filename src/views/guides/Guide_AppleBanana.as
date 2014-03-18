@@ -1,12 +1,12 @@
 package views.guides
 {
+	import flash.filesystem.File;
+	
 	import events.GuideEvent;
 	
 	import models.PosVO;
 	
-	import starling.display.Button;
 	import starling.display.Image;
-	import starling.events.Event;
 	import starling.textures.Texture;
 
 	public class Guide_AppleBanana extends BasicGuide
@@ -18,9 +18,15 @@ package views.guides
 		
 		override protected function initHandler():void
 		{
-			setBG(assets.getTexture( "guide_mainBG"　));
-			initImage();
-			initBTNs();
+			assets.enqueue(File.applicationDirectory.resolvePath("assets/games/animation/record"));
+			assets.loadQueue(function(r:Number):void{
+				if(r == 1)
+				{
+					setBG(assets.getTexture( "guide_mainBG"　));
+					initImage();
+					initCompleted();
+				}
+			});
 		}
 		
 		private var bgs:Vector.<Texture>;
@@ -76,35 +82,6 @@ package views.guides
 			mask.scaleX = mask.scaleY = iconBG.scaleX = iconBG.scaleY= icon.scaleX = icon.scaleY = .8;
 		}
 		
-		private var btn_record:Button;
-		private var btn_play:Button;
-		private function initBTNs():void
-		{
-			btn_record = new Button( assets.getTexture("guide_btn_record_up") );
-			this.addChild( btn_record);
-			btn_record.x = 20;
-			btn_record.y = PosVO.REAL_HEIGHT - btn_record.height - 20;
-			btn_record.addEventListener( Event.TRIGGERED, onTriggered );
-			
-			btn_play = new Button( assets.getTexture("guide_btn_play_up") );
-			this.addChild( btn_play);
-			btn_play.x = PosVO.REAL_WIDTH - btn_play.width - 20;
-			btn_play.y = 20;
-			btn_play.addEventListener( Event.TRIGGERED, onTriggered );
-		}
-		
-		private function onTriggered(e:Event):void
-		{
-			switch(e.target)
-			{
-				case btn_record:		//录音，是被
-					
-					break;
-				case btn_play:			//播放
-					
-					break;
-			}
-		}
 		
 		override protected function startGuide():void
 		{

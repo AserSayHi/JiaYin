@@ -7,7 +7,6 @@ package views.components
 	
 	import controllers.Assets;
 	import controllers.MC;
-	import controllers.ScreenController;
 	
 	import models.code.ScreenCode;
 	
@@ -19,6 +18,8 @@ package views.components
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.utils.AssetManager;
+	
+	import utils.ScreenController;
 	
 	public class UI_contentScreen extends Sprite
 	{
@@ -84,7 +85,7 @@ package views.components
 		
 		private function initHeadImage():void
 		{
-			head = Assets.getImage( assets, "headIcon_0" );
+			head = new Image( assets.getTexture( "headIcon_0" ));
 			this.addChild( head );
 			head.touchable = false;
 			head.x = 49;
@@ -94,7 +95,7 @@ package views.components
 		
 		private function initBG():void
 		{
-			bg = Assets.getImage( assets, "UIboard" );
+			bg = new Image( assets.getTexture( "UIboard" ));
 			bg.pivotY = 6;
 			this.addChild( bg );
 			bg.addEventListener( TouchEvent.TOUCH, onTouch );

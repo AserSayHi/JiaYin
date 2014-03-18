@@ -1,5 +1,7 @@
 package views.games
 {
+	import com.pamakids.iflytek.event.IFlytekRecogEvent;
+	
 	import models.PosVO;
 	
 	import starling.display.Image;
@@ -12,17 +14,39 @@ package views.games
 			super();
 		}
 		
-		//override functions=============================================================
 		override protected function initHandler():void
 		{
 			setGameBG( assets.getTexture( "mainBG" ));
 			initImage();
-			initKid();
-			initialized();
+			initCompleted();
 		}
 		
-		private function initKid():void
+		private function recogHandler(e:IFlytekRecogEvent):void
 		{
+			switch(e.type)
+			{
+				case IFlytekRecogEvent.UPDATE_LEXCION_SUCCESS:
+					trace("recognizer词典更新成功");
+					break;
+				case IFlytekRecogEvent.UPDATE_LEXCION_FAILED:
+					trace("recognizer词典更新失败，错误码： " + e.message);
+					break;
+				case IFlytekRecogEvent.RECOG_BEGIN:
+					trace("语音识别开始！");
+					break;
+				case IFlytekRecogEvent.RECOG_END:
+					trace("语音识别结束！");
+					break;
+				case IFlytekRecogEvent.RECOG_ERROR:
+					trace("识别出错，错误码： " + e.message);
+					break;
+				case IFlytekRecogEvent.RECOG_RESULT:
+					trace("获取识别结果，语音内容为：" + e.message);
+					break;
+				case IFlytekRecogEvent.VOLUME_CHANGED:
+					trace("语音音量变化，当前音量值为：  " + e.message);
+					break;
+			}
 		}
 		
 		private var image_run:Image;

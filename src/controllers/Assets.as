@@ -4,8 +4,6 @@ package controllers
 	
 	import flash.utils.Dictionary;
 	
-	import starling.display.Image;
-	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 
 	/**
@@ -24,14 +22,6 @@ package controllers
 			return Singleton.getInstance(Assets);
 		}
 		
-		public static function getImage(ast:AssetManager, name:String):Image
-		{
-			var texture:Texture = ast.getTexture( name );
-			if(texture)
-				return new Image( texture );
-			return null;
-		}
-		
 		public function getAssetsManager(name:String):AssetManager
 		{
 			if(!_dic.hasOwnProperty(name))
@@ -43,7 +33,6 @@ package controllers
 		{
 			if(_dic.hasOwnProperty(name))
 			{
-//				_dic[name].dispose();
 				_dic[name].purge()
 				delete _dic[name];
 			}

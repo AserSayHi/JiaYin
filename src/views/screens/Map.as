@@ -2,8 +2,6 @@ package views.screens
 {
 	import flash.utils.Dictionary;
 	
-	import controllers.MC;
-	
 	import models.PosVO;
 	import models.code.ScreenCode;
 	
@@ -18,10 +16,11 @@ package views.screens
 		{
 		}
 		
-		override protected function initScreenContent():void
+		override protected function initHandler():void
 		{
 			initMenu();
 			initBtns();
+			initCompleted();
 		}
 		
 		private function initMenu():void

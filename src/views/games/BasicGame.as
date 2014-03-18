@@ -1,7 +1,6 @@
 package views.games
 {
 	import controllers.Assets;
-	import controllers.GameController;
 	import controllers.MC;
 	
 	import models.code.ScreenCode;
@@ -13,11 +12,11 @@ package views.games
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
 	
+	import utils.GameController;
 	import utils.StatusManager;
 
 	/**
-	 * 游戏基类
-	 * @author kc2ong
+	 * 拓展类需重写 initHandler()方法来完成初始化，初始化完成时调用initCompleted()派发完成事件
 	 */	
 	public class BasicGame extends Sprite
 	{
@@ -38,7 +37,7 @@ package views.games
 		protected function getImage(name:String):Image
 		{
 			if(assets)
-				return Assets.getImage( assets, name );
+				return new Image( assets.getTexture( name ));
 			else
 				return null;
 		}
@@ -99,7 +98,7 @@ package views.games
 		/**
 		 * 初始化完成后调用该方法
 		 */		
-		final protected function initialized():void
+		final protected function initCompleted():void
 		{
 			dispatchEvent( new Event( INITIALIZED ));
 		}

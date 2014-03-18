@@ -14,6 +14,8 @@ package controllers
 	
 	import views.components.Stage2D;
 	import views.components.Stage3D;
+	import utils.GameController;
+	import utils.ScreenController;
 	
 	public class MC extends Singleton
 	{

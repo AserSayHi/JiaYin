@@ -38,6 +38,8 @@ package
 			s.enableErrorChecking = true;
 			s.start();
 		}
+		
 		private var s:Starling;
+		
 	}
 }
