@@ -1,13 +1,13 @@
 package views.guides
 {
-	import flash.filesystem.File;
-	
 	import events.GuideEvent;
 	
 	import models.PosVO;
 	
 	import starling.display.Image;
 	import starling.textures.Texture;
+	
+	import utils.FlashAssets;
 
 	public class Guide_AppleBanana extends BasicGuide
 	{
@@ -18,14 +18,11 @@ package views.guides
 		
 		override protected function initHandler():void
 		{
-			assets.enqueue(File.applicationDirectory.resolvePath("assets/games/animation/record"));
-			assets.loadQueue(function(r:Number):void{
-				if(r == 1)
-				{
-					setBG(assets.getTexture( "guide_mainBG"　));
-					initImage();
-					initCompleted();
-				}
+			var fAssets:FlashAssets = FlashAssets.getInstance( FlashAssets.GAMES );
+			fAssets.loadSWF( "assets/swfs/monster.swf", function():void{
+				setBG(assets.getTexture( "guide_mainBG"　));
+				initImage();
+				initCompleted();
 			});
 		}
 		
@@ -103,7 +100,6 @@ package views.guides
 		
 		override public function dispose():void
 		{
-			
 			super.dispose();
 		}
 	}

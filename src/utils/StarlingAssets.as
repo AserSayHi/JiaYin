@@ -1,4 +1,4 @@
-package controllers
+package utils
 {
 	import com.pamakids.utils.Singleton;
 	
@@ -10,16 +10,16 @@ package controllers
 	 * AssetsManager Controller
 	 * @author Administrator
 	 */	
-	public class Assets extends Singleton
+	public class StarlingAssets extends Singleton
 	{
-		public static const MAIN_UI:String = "mainUI";
+		public static const SCREEN:String = "mainUI";
 		public static const Games:String = "games";
 		
 		protected var _dic:Dictionary = new Dictionary();
 		
-		public static function get instance():Assets
+		public static function get instance():StarlingAssets
 		{
-			return Singleton.getInstance(Assets);
+			return Singleton.getInstance(StarlingAssets);
 		}
 		
 		public function getAssetsManager(name:String):AssetManager

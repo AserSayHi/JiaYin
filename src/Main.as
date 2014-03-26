@@ -31,7 +31,7 @@ package
 				apkInstall.addEventListener(Event.ACTIVATE, initialize);
 				apkInstall.addEventListener(IFlytekServiceEvent.INSTALL_SERVICE_FAILED, onInstallFailed);
 				//安装讯飞语音+
-				apkInstall.installService("assets/apk/SpeechService_1.0.1063.mp3");
+				apkInstall.installService("assets/iflytek/SpeechService_1.0.1063.mp3");
 			}
 			else
 			{

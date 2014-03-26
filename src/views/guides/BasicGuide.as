@@ -1,6 +1,6 @@
 package views.guides
 {
-	import controllers.Assets;
+	import utils.StarlingAssets;
 	
 	import events.GuideEvent;
 	
@@ -25,7 +25,7 @@ package views.guides
 		final public function initialize():void
 		{
 			mStatus = StatusManager.getInstance();
-			assets = Assets.instance.getAssetsManager( Assets.Games );
+			assets = StarlingAssets.instance.getAssetsManager( StarlingAssets.Games );
 			initHandler();			//指引初始化
 			this.addEventListener( GuideEvent.CHANGED, onStepChanged );
 		}

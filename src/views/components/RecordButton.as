@@ -1,15 +1,11 @@
 package views.components
 {
-	import controllers.Assets;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+	import flash.utils.getTimer;
 	
-	import starling.animation.Juggler;
-	import starling.display.Button;
-	import starling.display.MovieClip;
-	import starling.display.Sprite;
-	import starling.events.Event;
-	import starling.textures.Texture;
-	import starling.utils.AssetManager;
-	
+	import utils.FlashAssets;
 	import utils.Voice;
 
 	/**
@@ -23,88 +19,65 @@ package views.components
 			init();
 		}
 		
-		private var assets:AssetManager;
-		private var btn:Button;
 		private var mc:MovieClip;
-		private var juggler:Juggler;
 		
 		private function init():void
 		{
-			assets = Assets.instance.getAssetsManager( Assets.Games );
-			initBtn();
-			initMC();
+			mc = FlashAssets.getInstance( FlashAssets.GLOBAL).getMovieClipByName( "btn_record" ) as MovieClip;
+			this.addChild( mc );
+			mc.addEventListener(MouseEvent.MOUSE_DOWN, onTriggered);
+			mc.addEventListener(MouseEvent.MOUSE_UP, onTriggered);
+			mc.gotoAndStop(1);
 		}
 		
-		private function initBtn():void
+//		private var recording:Boolean = false;
+		private function onTriggered(e:MouseEvent):void
 		{
-			btn = new Button( assets.getTexture("") );
-			btn.x = btn.pivotX = btn.width >> 1;
-			btn.y = btn.pivotY = btn.height >> 1;
-			this.addChild( btn );
-			btn.x = btn.pivotX;
-			btn.addEventListener( Event.TRIGGERED, onTriggered );
-		}
-		
-		private function onTriggered(e:Event):void
-		{
-			if(recording)
-				return;
-			recording = true;
-			mc.visible = true;
-			if(!juggler)
-				juggler = new Juggler();
-			juggler.add( mc );
-			Voice.instance.startRecognizer( onResult );
+//			if(recording)
+//				return;
+			switch(e.type)
+			{
+				case MouseEvent.MOUSE_DOWN:		//开始识别
+					if(startHandler)
+						startHandler();
+					Voice.instance.startRecognizer( onResult );
+					mc.gotoAndStop(2);
+					trace("开始时间：" + getTimer());
+					break;
+				case MouseEvent.MOUSE_UP:		//结束等待结果
+//					recording = true;
+					Voice.instance.stopRecognizer();
+					mc.gotoAndStop(1);
+					break;
+			}
 		}
 		
 		private function onResult(result:String):void
 		{
-			recording = false;
-			mc.visible = false;
-			juggler.remove( mc );
+			trace("result =" + result);
+//			recording = false;
 			if(resultHandler)
-				resultHandler();
+				resultHandler( result );
 		}
 		
 		private var resultHandler:Function;
-		public function setResultFunction(func:Function):void
+		private var startHandler:Function;
+		public function setResultFunction(resultHandler:Function, startHandler:Function=null):void
 		{
-			resultHandler = func;
+			this.resultHandler = resultHandler;
+			this.startHandler = startHandler;
 		}
 		
-		private function initMC():void
+		public function dispose():void
 		{
-			var textures:Vector.<Texture> = assets.getTextures("");
-			mc = new MovieClip( textures, 24 );
-			mc.pivotX = mc.width >> 1;
-			mc.pivotY = mc.height >> 1;
-			mc.x = btn.x;
-			mc.y = btn.y;
-			this.addChild( mc );
-			mc.touchable = false;
-		}
-		
-		private var recording:Boolean = false;
-		
-		override public function dispose():void
-		{
-			assets = null;
-			resultHandler = null;
-			if(btn)
-			{
-				btn.removeEventListener( Event.TRIGGERED, onTriggered );
-				btn.removeFromParent( true );
-				btn = null;
-			}
 			if(mc)
 			{
-				if(juggler)
-					juggler.remove( mc );
-				juggler = null;
-				mc.removeFromParent(true);
+				mc.stop()
+				if(mc.parent)
+					mc.parent.removeChild( mc );
 				mc = null;
 			}
-			super.dispose();
+			resultHandler = null;
 		}
 	}
 }

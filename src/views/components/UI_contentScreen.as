@@ -5,7 +5,7 @@ package views.components
 	
 	import flash.utils.Dictionary;
 	
-	import controllers.Assets;
+	import utils.StarlingAssets;
 	import controllers.MC;
 	
 	import models.code.ScreenCode;
@@ -38,7 +38,7 @@ package views.components
 		private function init():void
 		{
 			sController = MC.instance.getScreenController();
-			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
+			assets = StarlingAssets.instance.getAssetsManager( StarlingAssets.SCREEN );
 			menu = new Dictionary();
 			initBG();
 			initHeadImage();

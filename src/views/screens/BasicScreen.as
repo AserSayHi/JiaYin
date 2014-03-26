@@ -1,6 +1,6 @@
 package views.screens
 {
-	import controllers.Assets;
+	import utils.StarlingAssets;
 	import controllers.MC;
 	import utils.ScreenController;
 	
@@ -21,7 +21,7 @@ package views.screens
 		{
 		}
 		
-		protected var assets:AssetManager = Assets.instance.getAssetsManager( Assets.MAIN_UI );
+		protected var assets:AssetManager = StarlingAssets.instance.getAssetsManager( StarlingAssets.SCREEN );
 		protected var controller:ScreenController = MC.instance.getScreenController();
 		
 		final protected function getImage(name:String):Image

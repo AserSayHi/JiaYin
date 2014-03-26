@@ -4,20 +4,18 @@ package utils
 	
 	import flash.filesystem.File;
 	
+	import controllers.MC;
+	
 	import models.code.ScreenCode;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.utils.AssetManager;
 	
-	
-	import views.components.MainLoading;
 	import views.screens.BasicScreen;
 	import views.screens.Content;
 	import views.screens.Games;
 	import views.screens.Map;
-	import controllers.Assets;
-	import controllers.MC;
 	
 	public class ScreenController extends Singleton
 	{
@@ -62,35 +60,35 @@ package utils
 			crtScreen.alpha = 0;
 			if(prevScreen)
 				prevScreen.parent.swapChildren( prevScreen, crtScreen );
-			StatusManager.getInstance().addFunc( animation, 50 );
-		}
-		private function animation():void
-		{
-			crtScreen.alpha += 0.1;
-			if(mainLoading)
-				mainLoading.alpha = 1 - crtScreen.alpha;
-			if(prevScreen)
-				prevScreen.alpha = 1 - crtScreen.alpha;
-			if(crtScreen.alpha >= 1)
-			{
-				StatusManager.getInstance().delFunc( animation );
-				crtScreen.alpha = 1;
-				crtScreen.touchable = true;
-				if(mainLoading && mainLoading.parent)
-					mainLoading.parent.removeChild( mainLoading );
-				mainLoading = null;
-				delDisplayObject(prevScreen);
-			}
+			StatusManager.getInstance().addFunc( 
+				function():void{
+					crtScreen.alpha += 0.1;
+					if(prevScreen)
+						prevScreen.alpha = 1 - crtScreen.alpha;
+				}, 50, 10, 
+				function():void{
+					crtScreen.alpha = 1;
+					crtScreen.touchable = true;
+					delDisplayObject(prevScreen);
+				});
+			mc.hideLoading();
 		}
 		
-		private var mainLoading:MainLoading;
 		private function loadAssets(ID:String, args:*=null):void
 		{
 			mc = MC.instance;
-			mainLoading = new MainLoading();
-			mc.addToStage2D( mainLoading, true );
+			mc.showLoading();
 			
-			assets = Assets.instance.getAssetsManager( Assets.MAIN_UI );
+			if(!FlashAssets.checkInitialized( FlashAssets.GLOBAL ))
+			{
+				//初次运行，加载全局动画资源
+				FlashAssets.getInstance( FlashAssets.GLOBAL ).loadSWF( "assets/swfs/mainUI.swf",function():void{
+					loadAssets(ID, args);
+				});
+				return;
+			}
+			
+			assets = StarlingAssets.instance.getAssetsManager( StarlingAssets.SCREEN );
 			assets.enqueue(File.applicationDirectory.resolvePath("assets/mainUI"));
 			assets.loadQueue( function(ratio:Number):void{
 				if(ratio == 1)		//加载完成
@@ -145,7 +143,7 @@ package utils
 				delBG();
 				this.mc = null;
 				this.assets = null;
-				Assets.instance.delAssetsManager( Assets.MAIN_UI );
+				StarlingAssets.instance.delAssetsManager( StarlingAssets.SCREEN );
 			}
 		}
 		

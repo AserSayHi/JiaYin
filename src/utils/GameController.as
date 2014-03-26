@@ -5,18 +5,19 @@ package utils
 	
 	import flash.filesystem.File;
 	
-	import controllers.Assets;
 	import controllers.MC;
 	
 	import events.GuideEvent;
 	
+	import models.PosVO;
 	import models.code.GameCode;
 	import models.code.ScreenCode;
 	
+	import starling.display.Image;
 	import starling.events.Event;
 	import starling.utils.AssetManager;
 	
-	import views.components.MainLoading;
+	import views.components.ResultBoard;
 	import views.games.BasicGame;
 	import views.games.Game_AppleBanana;
 	import views.games.Game_RunStop;
@@ -41,7 +42,6 @@ package utils
 		
 		private var crtGameID:String;
 		private var crtGame:BasicGame;
-		private var loading:MainLoading;
 		private var crtGuide:BasicGuide;
 		private var ifGuide:Boolean;
 		
@@ -50,17 +50,27 @@ package utils
 			return ifGuide;
 		}
 		
-		public function openGame(gameID:String, guide:Boolean=false):void
+		/**
+		 * 打开游戏模块
+		 * @param gameID		游戏id
+		 * @param needVoice		是否需要语音识别模块
+		 * @param guide			是否需要游戏指引
+		 * 
+		 */		
+		public function openGame(gameID:String, needVoice:Boolean=false, guide:Boolean=false):void
 		{
-			assets = Assets.instance.getAssetsManager( Assets.Games );
+				
+			assets = StarlingAssets.instance.getAssetsManager( StarlingAssets.Games );
 			status = StatusManager.getInstance();
 			mc = MC.instance;
+
+			//初始化语音识别控件
+			if(needVoice)
+				Voice.instance.initRecognizer();
 			
 			ifGuide = guide;
-			trace("guide = " + ifGuide)
-			loading = new MainLoading();
-			mc.addToStage2D( loading, true );
 			
+			mc.showLoading();
 			//加载游戏资源
 			crtGameID = gameID;
 			assets.enqueue( File.applicationDirectory.resolvePath( "assets/games/global" ) );
@@ -95,12 +105,8 @@ package utils
 		{
 			switch(e.type)
 			{
-				case GuideEvent.INITIALIZED:	//清除loading
-					TweenLite.to( loading, 0.5, {alpha: 0, onComplete:function():void{
-						mc.delChild( loading );
-						loading = null;
-						crtGuide.play();
-					}});
+				case GuideEvent.INITIALIZED:	//清除loading，之后开始播放指引
+					mc.hideLoading( crtGuide.play );
 					break;
 				case GuideEvent.ENDED:
 					initGame();
@@ -112,8 +118,6 @@ package utils
 		{
 			crtGame = gameFactory( crtGameID );
 			crtGame.addEventListener( BasicGame.INITIALIZED, onGameState);
-			crtGame.addEventListener( BasicGame.RESULT_SUCCESSED, onGameState);
-			crtGame.addEventListener( BasicGame.RESULT_FAILED, onGameState);
 			crtGame.addEventListener( BasicGame.ENDED, onGameState);
 			crtGame.touchable = false;
 			mc.addToStage3D( crtGame );
@@ -151,17 +155,11 @@ package utils
 					}
 					else
 					{
-						TweenLite.to( loading, 1.5, {alpha: 0, onComplete:function():void{
-							mc.delChild( loading );
-							loading = null;
+						mc.hideLoading( function():void{
 							crtGame.touchable = true;
 							crtGame.start();
-						}});
+						});
 					}
-					break;
-				case BasicGame.RESULT_SUCCESSED:
-					break;
-				case BasicGame.RESULT_FAILED:
 					break;
 				case BasicGame.ENDED:
 					closeGame();
@@ -172,6 +170,11 @@ package utils
 		
 		public function closeGame():void
 		{
+			if(result)
+			{
+				result.removeFromParent( true );
+				result = null;
+			}
 			if(crtGuide)
 			{
 				crtGuide.removeEventListener(GuideEvent.INITIALIZED, guideStateHandler);
@@ -182,15 +185,14 @@ package utils
 			if(crtGame)
 			{
 				crtGame.removeEventListener( BasicGame.INITIALIZED, onGameState);
-				crtGame.removeEventListener( BasicGame.RESULT_SUCCESSED, onGameState);
-				crtGame.removeEventListener( BasicGame.RESULT_FAILED, onGameState);
 				crtGame.removeFromParent(true);
 				crtGame = null;
 			}
 			assets = null;
 			status = null;
 			mc = null;
-			Assets.instance.delAssetsManager( Assets.Games );
+			StarlingAssets.instance.delAssetsManager( StarlingAssets.Games );	//清理资源
+			FlashAssets.delInstance( FlashAssets.GAMES );		//清理游戏中的原生动画资源
 		}
 		
 		private function gameFactory(id:String):BasicGame
@@ -223,5 +225,43 @@ package utils
 			return guide;
 		}
 		
+		/**
+		 * 显示成绩面板
+		 * @param stars	所获得星星数量
+		 */		
+		public function showResultBoard(stars:int):void
+		{
+			if(!mask)
+			{
+				mask = new Image(assets.getTexture("image_mask"));
+				mask.alpha = .5;
+				mask.width = PosVO.LOGIC_WIDTH;
+				mask.height = PosVO.LOGIC_HEIGHT;
+			}
+			crtGame.addChild( mask );
+			
+			if(!result)
+			{
+				result = new ResultBoard();
+				result.pivotX = result.width >> 1;
+				result.pivotY = result.height >> 1;
+				result.x = PosVO.REAL_WIDTH >> 1;
+				result.y = PosVO.REAL_HEIGHT >> 1;
+			}
+			crtGame.addChild( result );
+			result.showStars( stars );
+		}
+		private var result:ResultBoard;
+		private var mask:Image;
+		public function hideResultBoard():void
+		{
+			mask.removeFromParent();
+			result.removeFromParent();
+		}
+		
+		public function getCrtGame():BasicGame
+		{
+			return crtGame;
+		}
 	}
 }

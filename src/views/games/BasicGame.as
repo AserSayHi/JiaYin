@@ -1,9 +1,6 @@
 package views.games
 {
-	import controllers.Assets;
 	import controllers.MC;
-	
-	import models.code.ScreenCode;
 	
 	import starling.display.Button;
 	import starling.display.Image;
@@ -13,6 +10,7 @@ package views.games
 	import starling.utils.AssetManager;
 	
 	import utils.GameController;
+	import utils.StarlingAssets;
 	import utils.StatusManager;
 
 	/**
@@ -21,8 +19,6 @@ package views.games
 	public class BasicGame extends Sprite
 	{
 		public static const INITIALIZED:String = "initialized";
-		public static const RESULT_SUCCESSED:String = "successed";
-		public static const RESULT_FAILED:String = "failed";
 		public static const ENDED:String = "ended";
 		
 		public function BasicGame()
@@ -30,9 +26,9 @@ package views.games
 			super();
 		}
 		
-		protected var assets:AssetManager;
-		protected var statusM:StatusManager;
-		protected var controller:GameController;
+		protected var assets:AssetManager = StarlingAssets.instance.getAssetsManager( StarlingAssets.Games );
+		protected var statusM:StatusManager = StatusManager.getInstance();
+		protected var controller:GameController = MC.instance.getGameController();
 		
 		protected function getImage(name:String):Image
 		{
@@ -42,20 +38,11 @@ package views.games
 				return null;
 		}
 		
-		final public function initialize():void
-		{
-			assets = Assets.instance.getAssetsManager( Assets.Games );
-			statusM = StatusManager.getInstance();
-			controller = MC.instance.getGameController();
-			initHandler();
-			initHomeBtn();
-		}
-		
 		private var btn_home:Button;
-		private function initHomeBtn():void
+		protected function initHomeBtn():void
 		{
-			btn_home = new Button( assets.getTexture( "btn_home_up" ) );
-			btn_home.downState = assets.getTexture( "btn_home_down" );
+			btn_home = new Button( assets.getTexture( "btn_map" ) );
+//			btn_home.downState = assets.getTexture( "btn_home_down" );
 			btn_home.x = btn_home.y = 10;
 			this.addChild( btn_home );
 			btn_home.addEventListener( Event.TRIGGERED, onTriggered );
@@ -68,8 +55,7 @@ package views.games
 		private function onTriggered(e:Event):void
 		{
 			//关闭游戏，并离开游戏场景
-			controller.closeGame();
-			MC.instance.getScreenController().openScreen( ScreenCode.MAP );
+			end();
 		}
 		
 		private var BG:Image;
@@ -100,11 +86,12 @@ package views.games
 		 */		
 		final protected function initCompleted():void
 		{
+			initHomeBtn();
 			dispatchEvent( new Event( INITIALIZED ));
 		}
 		
 		//override functions=============================================================
-		protected function initHandler():void
+		public function initialize():void
 		{
 		}
 		public function start():void
@@ -115,6 +102,7 @@ package views.games
 		}
 		public function end():void
 		{
+			dispatchEvent( new Event( BasicGame.ENDED ));
 		}
 		public function pauseGame():void
 		{

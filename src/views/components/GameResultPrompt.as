@@ -1,6 +1,6 @@
 package views.components
 {
-	import controllers.Assets;
+	import utils.StarlingAssets;
 	
 	import models.GameResultVO;
 	
@@ -36,7 +36,7 @@ package views.components
 		
 		private function init():void
 		{
-			assets = Assets.instance.getAssetsManager( Assets.Games );
+			assets = StarlingAssets.instance.getAssetsManager( StarlingAssets.Games );
 			initBG();
 			initBtn();
 			initStars();

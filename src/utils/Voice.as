@@ -5,6 +5,8 @@ package utils
 	import com.pamakids.iflytek.event.IFlytekRecogEvent;
 	import com.pamakids.utils.Singleton;
 	
+	import flash.utils.getTimer;
+	
 	public class Voice extends Singleton
 	{
 		public static const RECOGNIZER:String = "recognizer";
@@ -67,7 +69,7 @@ package utils
 			{
 				case IFlytekRecogEvent.INITIALIZE_SUCCESS:
 					trace("recognizer初始化完成");
-					recognizer.initGrammar("assets/apk/call.bnf");
+					recognizer.initGrammar("assets/iflytek/call.bnf");
 					break;
 				case IFlytekRecogEvent.INITIALIZE_FAILED:
 					trace("recog初始化失败，错误码： " + e.message);
@@ -98,6 +100,7 @@ package utils
 					break;
 				case IFlytekRecogEvent.RECOG_BEGIN:
 					trace("语音识别开始！");
+					trace("侦听到开始时间：" + getTimer());
 					break;
 				case IFlytekRecogEvent.RECOG_END:
 					trace("语音识别结束！");
@@ -114,6 +117,7 @@ package utils
 					trace("获取识别结果，语音内容为：" + e.message);
 					break;
 				case IFlytekRecogEvent.VOLUME_CHANGED:
+					trace("第一次音量变化时间：" + getTimer());
 					trace("语音音量变化，当前音量值为：  " + e.message);
 					break;
 			}
@@ -128,6 +132,11 @@ package utils
 		{
 			resultCallback = resultHandler;
 			_recognizer.startRecog();
+		}
+		
+		public function stopRecognizer():void
+		{
+			_recognizer.stopRecog();
 		}
 		
 		/**

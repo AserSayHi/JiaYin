@@ -40,26 +40,26 @@ package views.screens
 		
 		private function test():void
 		{
-			btn_runstop = new Button(assets.getTexture("btn_startGame"));
-			btn_runstop.x = PosVO.REAL_WIDTH - btn_runstop.width >> 1;
-			btn_runstop.y = ( PosVO.REAL_HEIGHT - btn_runstop.height >> 1 ) + 60;
-			this.addChild( btn_runstop );
-			btn_runstop.addEventListener(Event.TRIGGERED, onTriggered);
+//			btn_runstop = new Button(assets.getTexture("btn_startGame"));
+//			btn_runstop.x = PosVO.REAL_WIDTH - btn_runstop.width >> 1;
+//			btn_runstop.y = ( PosVO.REAL_HEIGHT - btn_runstop.height >> 1 ) + 60;
+//			this.addChild( btn_runstop );
+//			btn_runstop.addEventListener(Event.TRIGGERED, onTriggered);
 			
 			btn_applebanana = new Button(assets.getTexture("btn_startGame"));
-			btn_applebanana.x = btn_runstop.x;
-			btn_applebanana.y = btn_runstop.y + 60
+			btn_applebanana.x = PosVO.REAL_WIDTH - btn_applebanana.width >> 1;
+			btn_applebanana.y = ( PosVO.REAL_HEIGHT - btn_applebanana.height >> 1 ) + 120;
 			this.addChild( btn_applebanana );
 			btn_applebanana.addEventListener(Event.TRIGGERED, onTriggered);
 			
 			btn_map = new Button(assets.getTexture("btn_map"));
-			btn_map.x = btn_runstop.x;
+			btn_map.x = btn_applebanana.x;
 			btn_map.y = btn_applebanana.y + 60;
 			this.addChild( btn_map );
 			btn_map.addEventListener(Event.TRIGGERED, onTriggered);
 		}
 		
-		private var btn_runstop:Button;
+//		private var btn_runstop:Button;
 		private var btn_applebanana:Button;
 		private var btn_map:Button;
 		
@@ -67,13 +67,13 @@ package views.screens
 		{
 			switch(e.target)
 			{
-				case btn_runstop:
-					controller.clean(true);
-					gameController.openGame( GameCode.RunStop, false );
-					break;
+//				case btn_runstop:
+//					controller.clean(true);
+//					gameController.openGame( GameCode.RunStop, true, false );
+//					break;
 				case btn_applebanana:
 					controller.clean(true);
-					gameController.openGame( GameCode.AppleBanana, false );
+					gameController.openGame( GameCode.AppleBanana, true, false );
 					break;
 				case btn_map:
 					controller.openScreen( ScreenCode.MAP );
@@ -84,12 +84,12 @@ package views.screens
 		
 		override public function dispose():void
 		{
-			if(btn_runstop)
-			{
-				btn_runstop.removeEventListener(Event.TRIGGERED, onTriggered);
-				btn_runstop.removeFromParent( true );
-				btn_runstop = null;
-			}
+//			if(btn_runstop)
+//			{
+//				btn_runstop.removeEventListener(Event.TRIGGERED, onTriggered);
+//				btn_runstop.removeFromParent( true );
+//				btn_runstop = null;
+//			}
 			if(btn_applebanana)
 			{
 				btn_applebanana.removeEventListener(Event.TRIGGERED, onTriggered);

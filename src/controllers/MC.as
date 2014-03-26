@@ -12,10 +12,13 @@ package controllers
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	
-	import views.components.Stage2D;
-	import views.components.Stage3D;
 	import utils.GameController;
 	import utils.ScreenController;
+	import utils.StatusManager;
+	
+	import views.components.MainLoading;
+	import views.components.Stage2D;
+	import views.components.Stage3D;
 	
 	public class MC extends Singleton
 	{
@@ -49,12 +52,36 @@ package controllers
 			main2d.x = PosVO.OffsetX;
 			main2d.y = PosVO.OffsetY;
 			Starling.current.nativeStage.addChild( main2d );
+			main2d.mouseEnabled = false;
 			stage2d = new Stage2D(main2d);
 			
-			//打开map场景
 			sController.openScreen( ScreenCode.MAP );
 		}
-		
+	
+		private var loading:MainLoading;
+		public function showLoading():void
+		{
+			if(loading)
+				return;
+			loading = new MainLoading();
+			this.addToStage2D( loading, true );
+		}
+		public function hideLoading(callBack:Function=null):void
+		{
+			if(!loading)
+				return;
+			StatusManager.getInstance().addFunc( 
+				function():void{
+					loading.alpha -= .1;
+				}, 50, 10, 
+				function():void{
+					loading.parent.removeChild( loading );
+					loading = null;
+					if(callBack)
+						callBack();
+				}
+			);
+		}
 		
 		/**
 		 * @param child 

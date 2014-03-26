@@ -9,6 +9,11 @@ package
 	
 	import starling.core.Starling;
 	
+	import utils.FlashAssets;
+	
+	import views.components.RecordButton;
+	
+	[SWF(backgroundColor="0x000000", frameRate="30")]
 	public class JiaYin extends Sprite
 	{
 		public function JiaYin()
@@ -29,6 +34,7 @@ package
 			var rect:Rectangle = new Rectangle(PosVO.OffsetX, PosVO.OffsetY, 
 				PosVO.LOGIC_WIDTH * PosVO.scale, 
 				PosVO.LOGIC_HEIGHT * PosVO.scale);
+			Starling.handleLostContext = true;
 			s = new Starling(Main, stage);
 			s.stage.stageWidth = PosVO.LOGIC_WIDTH * PosVO.scale;
 			s.stage.stageHeight = PosVO.LOGIC_HEIGHT * PosVO.scale;
@@ -40,6 +46,5 @@ package
 		}
 		
 		private var s:Starling;
-		
 	}
 }
